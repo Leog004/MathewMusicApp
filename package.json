@@ -4,6 +4,7 @@
   "description": "Mathew Marciel Music",
   "main": "app.js",
   "scripts": {
+    "start": "node server.js",
     "start:dev": "nodeman server.js",
     "start:prod": "NODE_ENV=production nodeman server.js",
     "debug": "ndb server.js"
