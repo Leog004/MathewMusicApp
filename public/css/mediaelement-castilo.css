@@ -185,7 +185,7 @@ body .castilo-mejs-container .mejs-playpause-button > button {
 
 body #content .castilo-mejs-container .mejs-playpause-button.mejs-pause > button,
 body .featured-content .castilo-mejs-container .mejs-playpause-button > button {
-	background: #cc00aa;
+	background: #C36364;
 }
 
 .castilo-mejs-container .mejs-volume-button,
@@ -367,7 +367,7 @@ body .castilo-mejs-container .mejs-volume-button {
 
 .mejs-video.castilo-mejs-container .mejs-captions-selected,
 .mejs-video.castilo-mejs-container .mejs-chapters-selected {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 body .castilo-mejs-container.mejs-video .mejs-playpause-button > button,

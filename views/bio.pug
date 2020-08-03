@@ -1,0 +1,69 @@
+extends base
+
+block append head
+ style#castilo-inline-style.
+    .featured-content {
+        background-image: url(/img/header/header_image.png);
+    }
+
+block content
+ header#featured.featured-content.fade-background-50.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12.col-md
+        h1.entry-title Bio
+      .col-12.col-md-auto
+        p.big.opacity-80 Music is currently on Apple Music, iTunes, Spotify and all other music platforms.
+ main#content.padding-top-bottom
+  .container
+   .row
+    .col-12.col-md-8(style='background-color:#eee; padding: 25px;')
+        h1 Mathew Maciel | 27 Years old
+        h6 Debut Single: 
+            p(style='font-weight:300') Thank You for Leaving (July 2016; Remixed, remastered and released February 2018)
+        h6 Current Single: 
+            p(style='font-weight:300') Move (ft. Archi) (October 2019)
+        h6 Genres: 
+            p(style='font-weight:300') Christian Contemporary, Pop
+        h6 Musical Influences: 
+            p(style='font-weight:300') Gavin DeGraw, Maroon 5, Matchbox 20, NEEDTOBREATHE, Unspoken
+        h6(style='color:#C36364') Music is currently on Apple Music, iTunes, Spotify and all other music platforms.
+        hr
+        h6 Radio Play:
+            p(style='font-weight:300') 
+                b Thank You for Leaving
+                | - 88.5 FM KVFE (Del Rio, TX), 88.7 FM KEPI (Eagle Pass, TX), 97.7 FM KVYP "The City" (McAllen, TX)
+            p(style='font-weight:300') 
+                b Move
+                | - 89.3 FM WYSZ "Yes FM" (Toledo, OH), 88.9 FM KNMI "Vertical Radio" (Farmington, NM), 97.1 FM KALS "Your Network of Praise" (Kalispell, MT), 104.9 Lime FM (Australia), 105.3 Way FM (Australia), 107.9 Life FM (Australia)
+    .col-12.col-md-4(style='padding: 25px;')
+        p
+            | Performed At
+        ul.circle
+            li Brownsville, TX - El Hueso de Fraile
+            li Edinburg, TX - Bert Ogden Arena
+            li Harlingen, TX - Harlingen Farmer's Market, The Prelude
+            li McAllen, TX - McAllen Creative Incubator, McAllen Food Park Unplugged, Music After Hours, MXLAN 2019, Palmfest 2019, Rodizio Grill, The Flying Walrus, Yerberia Cultura
+            li San Juan, TX - Cristo La Roca Church
+        hr
+        p
+            | Band Members:
+        ul.circle
+            li Mathew Maciel - Lead Vocals/Guitar
+            li Tono Leal - Guitar
+            li Justin Lopez - Bass
+            li Amy whitehouse - Vocals/Keys
+            li Jacob Villescas - Drums
+  footer.sales-box.padding-top-bottom
+   .container
+    .row.align-items-center
+      .col-12.col-md-6
+        a.cover-image(href='#')
+          img(src='tmp/sample-sales-cover.jpg' width='590' height='590' alt='')
+      .col-12.col-md-6
+        h3 New Stuff Each Week!
+        p
+          | Listen below and order your copy from Amazon, iTunes or your favorite record store. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseqa untur magni dolores eos qui ratione sequi.
+        p    
+
+   

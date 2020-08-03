@@ -1,0 +1,61 @@
+extends base
+
+
+block append head
+    style#castilo-inline-style.
+        .featured-content {
+            background-image: url(https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1520&q=100&h=420);
+        }
+
+block content
+ header#featured.featured-content.fade-background-50.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12.col-md
+        h1.entry-title About Me
+      .col-12.col-md-auto
+        p.big.opacity-80 My story
+ main#content.padding-top-bottom
+ .container
+  .row.align-items-center
+    .col-12.col-md-6
+      a.cover-image(href='#')
+        img(src='/img/mathew.jpg' width='590' height='590' alt='')
+    .col-12.col-md-6
+      h3 MY STORY
+      p
+        | Mathew was raised in Calumet City, Illinois, a suburb of Chicago before moving to the Rio Grande Valley, 
+        | Texas as a teenager. He always had a passion for music and after coming to know Christ in college, knew that Christian music is what he wanted to pursue. 
+        | After not quite making the cut for two worship bands in the valley, he began performing in the McAllen - Edinburg areas and received a great response from the local community. 
+        | He was also working production and as an On-Air personality in Christian radio, and was in a unique position to start his music career.
+      p 
+       |With hard work, encouragement from friends and family, and motivation to pursue music,  Mathew released his debut single "Thank You for Leaving" in July of 2016 followed by "Life" in 2017. With musical influences like Maroon 5, Gavin Degraw, Matchbox 20, NEEDTOBREATHE, Unspoken and being invited to perform at different locations such as the McAllen Food Park, MXLAN 2019, Palmfest 2019 and the Bert Odgen Arena, Mathew Maciel is ready to take his music to new heights!
+      p
+        a.button.button-small.button-white-filled(href='#') Amazon
+        a.button.button-small.button-white-filled(href='#') iTunes
+        a.button.button-small.button-white-filled(href='#') Spotify
+    .col-12.col-md-12
+        .gallery.gallery-columns-3(style='margin-top:25px;')
+            figure.gallery-item
+                .gallery-icon
+                    a(href='#')
+                        img(src='/img/header/header_image.png' alt='' width='300' height='300')
+            figure.gallery-item
+                .gallery-icon
+                    a(href='#')
+                     img(src='/img/header/header_image2.png' alt='' width='300' height='300')
+            figure.gallery-item
+                .gallery-icon
+                    a(href='#')
+                        img(src='/img/header/header_image3.png' alt='' width='300' height='300')
+ footer.sales-box.padding-top-bottom(style='margin-top:50px;')
+  .container
+   .row.align-items-center
+      .col-12.col-md-6
+        a.cover-image(href='#')
+          img(src='tmp/sample-sales-cover.jpg' width='590' height='590' alt='')
+      .col-12.col-md-6
+        h3 New Stuff Each Week!
+        p
+          | Listen below and order your copy from Amazon, iTunes or your favorite record store. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseqa untur magni dolores eos qui ratione sequi.
+        p    

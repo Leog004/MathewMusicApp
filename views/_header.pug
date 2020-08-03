@@ -1,0 +1,43 @@
+header#top.navbar.navbar-sticky
+  .container
+    .row.align-items-center
+      .site-title.col.col-lg-auto.order-first
+        h1
+          a.custom-logo-link(href='/' rel='home')
+            img.custom-logo(src='/img/header/logo.png' width='76' height='18' alt='Castilo')
+      nav#site-menu.col-12.col-lg.order-3.order-sm-4.order-lg-2
+        ul
+          li.menu-item
+            a(href='/about') About
+          li.menu-item
+            a(href='/bio') Bio
+          li.menu-item
+            a(href='#') Music
+          li.menu-item
+            a(href='#') Videos
+          li.menu-item
+            a(href='/contact') Contact
+      nav#social-links-menu.col-12.col-md-auto.order-4.order-md-1.order-lg-3
+        ul.social-navigation
+          li.menu-item.menu-item-type-custom
+            a(title='Facebook Profile' target='_blank' href='http://facebook.com')
+              span.screen-reader-text Facebook
+          li.menu-item.menu-item-type-custom
+            a(title='Google Play' target='_blank' href='http://play.google.com')
+              span.screen-reader-text Google Play
+          li.menu-item.menu-item-type-custom
+            a(title='Twitter Profile' target='_blank' href='http://twitter.com')
+              span.screen-reader-text Twitter
+          li.menu-item.menu-item-type-custom
+            a(title='SoundCloud' target='_blank' href='http://soundcloud.com/podcast')
+              span.screen-reader-text SoundCloud
+          li.menu-item.menu-item-type-custom
+            a(title='YouTube Channel' target='_blank' href='http://youtube.com')
+              span.screen-reader-text YouTube
+      .call-to-action.col-12.col-sm-auto.order-5.order-sm-2.order-lg-4
+        a.button.button-small(href='#' target='_blank')
+          span.zmdi.zmdi-filter-list
+          |  Shop Merch
+      .site-menu-toggle.col-auto.order-2.order-sm-3
+        a(href='#site-menu')
+          span.screen-reader-text Toggle navigation

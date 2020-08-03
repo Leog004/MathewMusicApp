@@ -1,0 +1,90 @@
+extends base 
+
+block append head
+ style#castilo-inline-style.
+    .featured-content {
+        background-image: url(https://images.unsplash.com/photo-1459305272254-33a7d593a851?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1520&q=100&h=420);
+    }
+
+block content
+ header#featured.featured-content.fade-background-50.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12.col-md
+        h1.entry-title Contact Us
+      .col-12.col-md-auto
+        p.big.opacity-80 We encourage you to get in touch with us.
+ main#content.padding-top-bottom
+  .container
+    .row.justify-content-md-center
+      .col-12.col-md-8.col-lg-7.text-center
+        h3
+          | Let's Connect
+      .w-100
+      .col-12.col-md-10.col-lg-8.text-center
+        p
+          | With our top of the line execution &amp; as an innovative team we take a broad way to deal with handling the important issues of developing brands and income in a digitally aware world. Best of the best no additional words, so please get in touch and we&apos;ll get back to you shortly!
+      .w-100
+      .col-12.col-md-10.col-lg-8
+        .row.text-center.justify-content-center
+          .col-6.col-sm-4.col-lg-3.address-info
+            h5
+              span.zmdi.zmdi-map
+              |  Address
+            p
+              | 23 Castilo, 43567
+              br
+              |  Brooklyn, USA
+          .col-6.col-sm-4.col-lg-3.address-info
+            h5
+              span.zmdi.zmdi-phone
+              |  Phone
+            p
+              | +23 432 423 16
+              br
+              |  +23 439 110 85
+          .col-6.col-sm-4.col-lg-3.address-info
+            h5
+              span.zmdi.zmdi-email
+              |  Email
+            p
+              | hi@castilo.com
+              br
+              |  sales@castilo.com
+      .col-12.col-md-10.col-lg-8.margin-top-bottom
+        form#contact_form(action='sendmail.php')
+          .message(style='display:none')
+            #contact_alert.alert aaaa
+          .row
+            .col-12.col-md-6
+              label(for='name') Name
+              input#name(type='text' placeholder='name' name='name' required='')
+            .col-12.col-md-6
+              label(for='email') Email
+              input#email(type='email' placeholder='email@email.com' name='email' required='')
+            .col-12
+              label(for='message') Message
+              textarea#message(name='message' cols='30' rows='10' required='')
+            .col-12.text-center
+              button.button-filled.button-color(type='submit')
+                span.zmdi.zmdi-mail-send
+                |  Get in touch
+ footer.sales-box.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12.col-md-6
+        a.cover-image(href='#')
+          img(src='tmp/sample-sales-cover.jpg' width='590' height='590' alt='')
+      .col-12.col-md-6
+        h3 New Stuff Each Week!
+        p
+          | Listen below and order your copy from Amazon, iTunes or your favorite record store. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseqa untur magni dolores eos qui ratione sequi.
+        p    
+
+block append javascript
+    script(src='assets/js/jquery.form.min.js')
+    script.
+        jQuery(function(){
+        // initialize ajax form plugin
+        jQuery('#contact_form').ajaxForm({ target: '#contact_alert' });
+        });

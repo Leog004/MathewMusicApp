@@ -1,12 +1,13 @@
+/*    Eslint-disabled       */
 import axios from 'axios';
 
-  async function instagramPhotos () {
+  export const instagramPhotos = async () => {
     // It will contain our photos' links
     const res = []
     
     try {
-        const userInfoSource = await axios.get('https://www.instagram.com/theraloss/')
-        console.log(userInfoSource);
+        const userInfoSource = await axios.get('https://www.instagram.com/mathew_maciel/')
+        //console.log(userInfoSource);
         // userInfoSource.data contains the HTML from Axios
         const jsonObject = userInfoSource.data.match(/<script type="text\/javascript">window\._sharedData = (.*)<\/script>/)[1].slice(0, -1)
 
@@ -29,7 +30,6 @@ import axios from 'axios';
     }
     
     return res
-    }
+};
 
-    var myImages = instagramPhotos();
-    console.log(myImages);
+

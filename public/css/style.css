@@ -424,7 +424,7 @@ object {
 /* 2. Links */
 a,
 a:hover {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 a {
@@ -1148,12 +1148,12 @@ animation-timing-function: ease-in-out;
 	left: 0;
 	width: 100%;
 	height: 2px;
-	background-color: #cc00aa;
+	background-color: #C36364;
 }
 
 .add-separator em {
 	font-style: normal;
-	color: #cc00aa;
+	color: #C36364;
 }
 
 
@@ -1467,8 +1467,8 @@ button.button-color,
 input[type="button"].button-color,
 input[type="reset"].button-color,
 input[type="submit"].button-color {
-	border-color: #cc00aa;
-	color: #cc00aa;
+	border-color: #C36364;
+	color: #C36364;
 }
 
 .button-white,
@@ -1501,8 +1501,8 @@ input[type="button"].button-color:focus,
 input[type="reset"].button-color:focus,
 input[type="submit"].button-color:focus,
 .pagination .page-numbers.current {
-	border-color: #cc00aa;
-	background-color: #cc00aa;
+	border-color: #C36364;
+	background-color: #C36364;
 	color: #fff;
 }
 
@@ -1643,7 +1643,7 @@ button .zmdi {
 .widget ul a:focus,
 .widget ul .current-cat:before,
 .widget ul .current-cat > a {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 .widget ul .current-cat > a {
@@ -1886,7 +1886,7 @@ button .zmdi {
 }
 
 #site-menu .current-menu-item > a {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 #site-menu .menu-item-has-children {
@@ -2219,7 +2219,7 @@ button .zmdi {
 
 .social-navigation a:hover,
 .social-navigation a:focus {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 @media (min-width: 1200px) {
@@ -2490,7 +2490,7 @@ button .zmdi {
 	}
 
 	.features .features-list li:hover .feature-icon {
-		background-color: #cc00aa;
+		background-color: #C36364;
 		color: #ffffff;
 	}
 }
@@ -2934,7 +2934,7 @@ button .zmdi {
 
 .share-entry .share-links a:hover,
 .share-entry .share-links a:focus {
-	color: #cc00aa;
+	color: #C36364;
 }
 
 .share-entry .share-links a .zmdi:before {
@@ -2959,7 +2959,7 @@ button .zmdi {
 /* 23. Meta categories */
 .categories a {
 	display: inline-block;
-	background-color: #cc00aa;
+	background-color: #C36364;
 	color: #ffffff;
 	text-transform: uppercase;
 	text-decoration: none;
