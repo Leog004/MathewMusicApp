@@ -1,48 +1,20 @@
-extends base 
+extends base
 
 block append head
  style#castilo-inline-style.
     .featured-content {
-        background-color: #313131;
-        background-image: url('/img/header/homepageImage3.jpg');
+        background-image: url(/img/header/header_image3.png);
     }
-    @media (min-width: 768px) {
-    .featured-content {
-        background-image: url('/img/header/homepageImage3.jpg');
-    }
-    }
-    .sales-box {
-        background-image: url(tmp/sample-sales.jpg);
-    }
-    .latest-news {
-        background-image: url(tmp/latest-news.jpg);
-    }    
-
 
 block content
- header#featured.featured-content.fade-background-0.padding-top-bottom
+ header#featured.featured-content.fade-background-50.padding-top-bottom
   .container
     .row.align-items-center
-      .col-12.col-lg-8.col-xl-7
-        .latest-episode
-          .podcast-episode
-            p.big.text-uppercase.opacity-50 Featured Music
-            h1.entry-title
-              a(href='#') 
-            iframe(src='https://open.spotify.com/embed?theme=black&uri=spotify%3Atrack%3A0RWwsyI9dSR2qErtaNxvHI&view=list' width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
-            //- .podcast-episode
-            //-   .podcast-episode-player(data-episode-download='/music/TheThrone.mp3' data-episode-download-button='Download Episode (4,567.6 KB)' data-episode-duration='3:02' data-episode-size='4,567.6 KB')
-            //-     audio.wp-audio-shortcode(preload='none' style='width: 100%;' controls='controls')
-            //-       source(src='/music/TheThrone.mp3' type='audio/mpeg')
-            p
-              a.button.button-filled.button-color(href='https://music.apple.com/us/artist/mathew-maciel/1133448720 ', target='_blank')
-                span.zmdi.zmdi-apple
-                |  Music
-              a.button.button-white(href='https://music.amazon.com/artists/B01IARNKLU?tab=CATALOG&ref=dm_wcp_artist_link_ad', target='_blank')
-                span.zmdi.zmdi-amazon
-                |  Music
-              a.button.button-white(href='https://open.spotify.com/artist/2babft8i5iezl343qG7G4v', target='_blank')
-                |  Spotify
+      .col-12.col-md
+        h1.entry-title Music
+      .col-12.col-md-auto
+        p.big.opacity-80 Music is currently on Apple Music, iTunes, Spotify and all other music platforms.
+
  main#content.padding-top-bottom
   .container
     .row
@@ -50,7 +22,7 @@ block content
         .episodes-listing
           h3.add-separator
             span
-              | Browse 
+              | All 
               em Music
           article.entry.entry-episode
             .row.align-items-lg-center
@@ -95,6 +67,41 @@ block content
                 //-       audio.wp-audio-shortcode(preload='none' style='width: 100%;' controls='controls')
                 //-         source(src='http://html.liviucerchez.com/common/preview1.mp3' type='audio/mpeg')
                 //-         source(src='http://html.liviucerchez.com/common/preview1.ogg' type='audio/ogg')
+          article.entry.entry-episode
+            .row.align-items-lg-center
+              .col-12.col-md-4.col-xl-3
+                .entry-media.entry-image.multiply-effect
+                  a(href='/img/TheThrone.png')
+                    img.first(src='/img/TheThrone.png' width='736' height='736' alt='')
+                    span.second
+                      img(src='/img/TheThrone.png' width='736' height='736' alt='')
+                    span.third
+                      img(src='/img/TheThrone.png' width='736' height='736' alt='')
+              .col-12.col-md-8.col-xl-9
+                header.entry-header
+                  .entry-meta
+                    span.posted-in
+                      span.screen-reader-text Posted in: 
+                      a(href='#' rel='bookmark') Throne Album
+                    span.posted-on
+                      span.screen-reader-text Posted on: 
+                      a(href='#' rel='bookmark')
+                        time.entry-date.published(datetime='2020-03-26T14:48:37+00:00') Mar 27, 2020
+                    span.tags
+                      span.screen-reader-text Tagged: 
+                      a(rel='tag' href='#') Throne 
+                      | , 
+                      a(rel='tag' href='#') TheThrone 
+                      | , 
+                      a(rel='tag' href='#') christian
+                  h2.entry-title
+                    a(href='#' rel='bookmark') The Throne
+                .entry-content
+                  p
+                    | 'Please don't stop me let me go/Move your body to the floor/feel the rhythm feel the flow/The party is bumpin' keep moving some more/ 
+                    | Please don't stop me let me go/Move your body to the floor/feel the rhythm feel the flow/Your hands in the air feel the beat in your soul'&mldr;
+                    a(href='/construction') (read more)
+                iframe(src='https://open.spotify.com/embed?theme=black&uri=spotify%3Atrack%3A0RWwsyI9dSR2qErtaNxvHI&view=list' width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
           article.entry.entry-episode
             .row.align-items-lg-center
               .col-12.col-md-4.col-xl-3
@@ -162,8 +169,43 @@ block content
                 .entry-content
                   p
                     | ' Thank you for leaving me/Thank you for teaching me/That you weren't what I needed and now I can see it/Thank you for showing me/I wasn't the man I was called to be/But now that I can be set free/ I thank you for leaving me '&mldr; 
-                    a(href='/construction') (read more)
+                    a(href='#') (read more)
                 iframe(src='https://open.spotify.com/embed?theme=black&uri=spotify%3Aalbum%3A35Y3dGthd5xzzUgiedLfvf&view=list' width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
+          article.entry.entry-episode
+            .row.align-items-lg-center
+              .col-12.col-md-4.col-xl-3
+                .entry-media.entry-image.multiply-effect
+                  a(href='/img/Life.png')
+                    img.first(src='/img/Life.png' width='736' height='736' alt='')
+                    span.second
+                      img(src='/img/Life.png' width='736' height='736' alt='')
+                    span.third
+                      img(src='/img/Life.png' width='736' height='736' alt='')
+              .col-12.col-md-8.col-xl-9
+                header.entry-header
+                  .entry-meta
+                    span.posted-in
+                      span.screen-reader-text Posted in: 
+                      a(href='#' rel='bookmark') Throne Album
+                    span.posted-on
+                      span.screen-reader-text Posted on: 
+                      a(href='#' rel='bookmark')
+                        time.entry-date.published(datetime='2020-03-26T14:48:37+00:00') Mar 27, 2020
+                    span.tags
+                      span.screen-reader-text Tagged: 
+                      a(rel='tag' href='#') Move 
+                      | , 
+                      a(rel='tag' href='#') life 
+                      | , 
+                      a(rel='tag' href='#') christian
+                  h2.entry-title
+                    a(href='#' rel='bookmark') Life
+                .entry-content
+                  p
+                    | 'Please don't stop me let me go/Move your body to the floor/feel the rhythm feel the flow/The party is bumpin' keep moving some more/ 
+                    | Please don't stop me let me go/Move your body to the floor/feel the rhythm feel the flow/Your hands in the air feel the beat in your soul'&mldr;
+                    a(href='/construction') (read more)
+                iframe(src='https://open.spotify.com/embed?theme=black&uri=spotify%3Aalbum%3A2XtgzAEaGH8baX6cqMut8N&view=list' width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
                 //- .entry-audio
                 //-   .podcast-episode
                 //-     .podcast-episode-player(data-episode-duration='00:44')
@@ -175,60 +217,3 @@ block content
         //-     a.button.button-filled(href='#')
         //-       span.zmdi.zmdi-more
         //-       |  Browse More
-  .latest-news.margin-top-bottom.invert-colors.fade-background-70.padding-top-bottom
-    .container
-      h3.add-separator
-        span
-          | Latest 
-          em Video
-      .row
-        .col-12.col-md-6
-          article.entry.entry-post
-            header.entry-header
-              .categories
-               <iframe width="500" height="250" src="https://www.youtube.com/embed/0SUDS6SyoYg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        .col-12.col-md-6
-          article.entry.entry-post
-            header.entry-header
-              .categories
-               <iframe width="500" height="250" src="https://www.youtube.com/embed/R8nvErLkglM?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        a.button.button-filled.button-color(href='https://www.youtube.com/channel/UCjLWlXFgYDV2SMRlY8fFEPA' target='_blank' rel='category tag', style='margin:0 auto;')
-            span.zmdi.zmdi-youtube
-            | Youtube
-  .container
-    .row
-      .col-12
-        .latest-images
-          h3.add-separator
-            span
-              | Latest from 
-              em Instagram
-          .row#instaRow
-          .pagination.pagination-load-more
-            a.button(href='https://www.instagram.com/mathew_maciel/?hl=en')
-              span.zmdi.zmdi-instagram
-              |  Follow Us
-//-  footer.sales-box.padding-top-bottom(style='background-image: url(https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1520&q=100&h=368)')
-//-   .container
-//-     .row.align-items-center
-//-       .col-12.col-md-6
-//-         a.cover-image(href='#')
-//-         //-   img(src='tmp/sample-sales-cover.jpg' width='590' height='590' alt='')
-//-       .col-12.col-md-6
-//-         h3 New Stuff Each Week!
-//-         p
-//-           | Listen below and order your copy from Amazon, iTunes or your favorite record store. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseqa untur magni dolores eos qui ratione sequi.
-//-         p
-//-           a.button.button-small.button-white(href='#') Amazon
-//-           a.button.button-small.button-white(href='#') iTunes
-//-           a.button.button-small.button-white(href='#') Spotify
-
-block append javascript
-    link#mediaelement-css(rel='stylesheet' href='/mediaelement/mediaelementplayer-legacy.css')
-    link#wp-mediaelement-css(rel='stylesheet' href='/mediaelement/wp-mediaelement.css')
-    link#castilo-additional-mediaelement-css(rel='stylesheet' href='/css/mediaelement-castilo.css')
-    script(src='/mediaelement/mediaelement-and-player.js')
-    script(src='/mediaelement/mediaelement-migrate.js')
-    script(src='/mediaelement/wp-mediaelement.js')
-    script(src='/js/mediaelement-castilo.js')
-    script(src='/js/bundle.js')

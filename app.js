@@ -68,6 +68,19 @@ app.get('/bio', (req, res) => {
     res.status(200).render('bio');
 });
 
+app.get('/music', (req, res) => {
+    res.status(200).render('music');
+});
+
+app.get('/construction', (req, res) => {
+    res.status(200).render('construction');
+});
+
+app.get('/videos', (req, res) => {
+    res.status(200).render('videos');
+});
+
+
 // ROUTES
 app.use('/api/v1/music', musicRouter); // gets music routes
 app.use('/api/v1/users', userRouter); // get user routes

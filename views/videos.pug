@@ -1,0 +1,44 @@
+extends base
+
+block append head
+ style#castilo-inline-style.
+    .featured-content {
+        background-image: url(/img/header/header_image3.png);
+    }
+
+block content
+ header#featured.featured-content.fade-background-50.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12.col-md
+        h1.entry-title Videos
+      .col-12.col-md-auto
+        p.big.opacity-80 You can view more of my videos on YouTube
+
+ main#content.padding-top-bottom
+  .container
+    .row
+      .col-12
+        .episodes-listing
+          h3.add-separator
+            span
+              | All 
+              em Videos
+          article.entry.entry-episode
+            .row.align-items-lg-center
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/0SUDS6SyoYg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/R8nvErLkglM?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          article.entry.entry-episode
+            .row.align-items-lg-center
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/KifW-11pYNw?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/6lkh8c_p-Q0?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          article.entry.entry-episode
+            .row.align-items-lg-center
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/sciOHiBrG6U?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              .col-12.col-md-6.col-xl-6
+                <iframe width="500" height="300" src="https://www.youtube.com/embed/0uNj60cudQU?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

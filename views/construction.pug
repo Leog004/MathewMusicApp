@@ -1,0 +1,21 @@
+extends base
+
+block append head
+ style#castilo-inline-style.
+    .featured-content {
+        background-image: url(/img/header/header_image.png);
+    }
+
+block content
+ header#featured.featured-content.padding-top-bottom
+  .container
+    .row.align-items-center
+      .col-12
+        h1.entry-title
+          span.d-none.d-sm-inline-block Page Is Under Construction
+          |  4
+          span.floating-letter 0
+          | 4
+        p Apologies, feel free to browse our videos and music.
+        p
+          a.button.button-small(href='/') Go Home
