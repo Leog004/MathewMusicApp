@@ -16,15 +16,26 @@ block append head
     }
     .latest-news {
         background-image: url(tmp/latest-news.jpg);
-    }    
-
+    }
+    @media (max-width: 768px) {
+        .remove{
+            display:none;
+        }    
+        .padTop{
+            padding-top:180px;
+        }
+        .spot{
+            background: #1DB954;
+            border: 2px solid #1DB954;
+        }
+    }
 
 block content
  header#featured.featured-content.fade-background-0.padding-top-bottom
   .container
     .row.align-items-center
       .col-12.col-lg-8.col-xl-7
-        .latest-episode
+        .latest-episode.padTop
           .podcast-episode
             p.big.text-uppercase.opacity-50 Featured Music
             h1.entry-title
@@ -38,10 +49,10 @@ block content
               a.button.button-filled.button-color(href='https://music.apple.com/us/artist/mathew-maciel/1133448720 ', target='_blank')
                 span.zmdi.zmdi-apple
                 |  Music
-              a.button.button-white(href='https://music.amazon.com/artists/B01IARNKLU?tab=CATALOG&ref=dm_wcp_artist_link_ad', target='_blank')
+              a.button.button-white.remove(href='https://music.amazon.com/artists/B01IARNKLU?tab=CATALOG&ref=dm_wcp_artist_link_ad', target='_blank')
                 span.zmdi.zmdi-amazon
                 |  Music
-              a.button.button-white(href='https://open.spotify.com/artist/2babft8i5iezl343qG7G4v', target='_blank')
+              a.button.button-white.spot(href='https://open.spotify.com/artist/2babft8i5iezl343qG7G4v', target='_blank')
                 |  Spotify
  main#content.padding-top-bottom
   .container
