@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+const enforce = require('express-sslify');
 app.use(enforce.HTTPS({trustProtoHeader: true}));
 
 const morgan = require('morgan');
@@ -11,8 +12,6 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const compression = require('compression');
-const enforce = require('express-sslify');
-
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const musicRouter = require('./routes/musicRoutes');
