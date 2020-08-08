@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const compression = require('compression');
 
 
 const AppError = require('./utils/appError');
@@ -18,9 +19,15 @@ const userRouter = require('./routes/usersRoutes');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '/views'));
-
+app.enable('trust proxy');
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
+
+// set secure https 
+app.use(helmet());
+app.use(cors());
+app.options('*', cors());
+
 
 // MIDDLEWARE
 if(process.env.NODE_ENV === 'development'){ app.use(morgan('dev')); }
@@ -32,15 +39,13 @@ const limiter = rateLimit({
     message: 'Too many request coming from this ip address, please try again in a hour'
 });
 
-// set secure https 
-app.use(helmet());
-app.enable('trust proxy');
+
 app.use('/api', limiter);
-app.use(cors());
-app.options('*', cors());
+
 
 // body parsar, reading data from body
 app.use(express.json({limit: '10kb'}));
+app.use(express.urlencoded({extended:true, limit: '10kb'}));
 app.use(cookieParser());
 
 // Data sanatization agains Nosql attacks
@@ -60,6 +65,9 @@ app.use(xss());
 //             res.redirect('https://' + req.headers.host + req.url);
 //     }
 // });
+
+
+app.use(compression());
 
 // Gets Time of request
 app.use((req, res, next) => {
