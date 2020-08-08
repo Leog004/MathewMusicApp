@@ -1,9 +1,6 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const enforce = require('express-sslify');
-app.use(enforce.HTTPS({trustProtoHeader: true}));
-
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -12,11 +9,12 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const compression = require('compression');
+
+
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const musicRouter = require('./routes/musicRoutes');
 const userRouter = require('./routes/usersRoutes');
-
 
 
 app.set('view engine', 'pug');
@@ -24,7 +22,6 @@ app.set('views', path.join(__dirname, '/views'));
 app.enable('trust proxy');
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // set secure https 
 app.use(helmet());
