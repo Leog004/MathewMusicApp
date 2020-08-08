@@ -9,12 +9,14 @@ const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const compression = require('compression');
-
+const enforce = require('express-sslify');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const musicRouter = require('./routes/musicRoutes');
 const userRouter = require('./routes/usersRoutes');
+
+app.use(enforce.HTTPS({trustProtoHeader: true}));
 
 
 app.set('view engine', 'pug');
@@ -22,6 +24,7 @@ app.set('views', path.join(__dirname, '/views'));
 app.enable('trust proxy');
 // serving static files
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // set secure https 
 app.use(helmet());
@@ -56,27 +59,12 @@ app.use(xss());
 
 
 
-
-
 app.use(compression());
 
 // Gets Time of request
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     next();
-});
-
-
-app.use (function (req, res, next) {
-    if (req.secure) {
-            // request was via https, so do no special handling
-           // next();
-            res.redirect('http://' + req.headers.host + req.url)
-    } else {
-            // request was via http, so redirect to https
-            //res.redirect('http://' + req.headers.host + req.url);
-            next();
-    }
 });
 
 app.get('/', (req, res) => {
