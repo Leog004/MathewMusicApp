@@ -7,6 +7,8 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
+
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -32,7 +34,10 @@ const limiter = rateLimit({
 
 // set secure https 
 app.use(helmet());
+app.enable('trust proxy');
 app.use('/api', limiter);
+app.use(cors());
+app.options('*', cors());
 
 // body parsar, reading data from body
 app.use(express.json({limit: '10kb'}));
