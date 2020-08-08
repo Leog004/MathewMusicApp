@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const app = express();
+app.use(enforce.HTTPS({trustProtoHeader: true}));
+
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -16,7 +18,6 @@ const globalErrorHandler = require('./controllers/errorController');
 const musicRouter = require('./routes/musicRoutes');
 const userRouter = require('./routes/usersRoutes');
 
-app.use(enforce.HTTPS({trustProtoHeader: true}));
 
 
 app.set('view engine', 'pug');
