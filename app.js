@@ -56,17 +56,6 @@ app.use(xss());
 
 
 
-// app.use (function (req, res, next) {
-//     if (req.secure) {
-//             // request was via https, so do no special handling
-//             next();
-//             //res.redirect('http://' + req.headers.host + req.url)
-//     } else {
-//             // request was via http, so redirect to https
-//             res.redirect('http://' + req.headers.host + req.url);
-//             //next();
-//     }
-// });
 
 
 app.use(compression());
@@ -75,6 +64,19 @@ app.use(compression());
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
     next();
+});
+
+
+app.use (function (req, res, next) {
+    if (req.secure) {
+            // request was via https, so do no special handling
+           // next();
+            res.redirect('http://' + req.headers.host + req.url)
+    } else {
+            // request was via http, so redirect to https
+            //res.redirect('http://' + req.headers.host + req.url);
+            next();
+    }
 });
 
 app.get('/', (req, res) => {
