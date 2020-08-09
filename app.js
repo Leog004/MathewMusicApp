@@ -64,6 +64,17 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use (function (req, res, next) {
+    if (req.secure) {
+            // request was via https, so do no special handling
+            next();
+    } else {
+            // request was via http, so redirect to https
+            res.redirect('https://' + req.headers.host + req.url);
+    }
+});
+
+
 app.get('/', (req, res) => {
     res.status(200).render('home');
 });
