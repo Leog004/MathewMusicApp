@@ -6,7 +6,7 @@ export const contactUs = async (name, email, message) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: '/contact',
+            url: 'https://www.mathewmacielmusic.com/contact',
             data: {
                 name,
                 email,
@@ -34,7 +34,7 @@ export const subcriber = async (email) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: '/subscriber',
+            url: 'https://www.mathewmacielmusic.com/subscriber',
             data: {
                 email
             }
