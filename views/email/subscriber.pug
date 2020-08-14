@@ -1,0 +1,15 @@
+extends baseEmail
+
+block content
+  p You got a new subscriber!
+  p Email : #{userEmail}
+  table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+    tbody
+      tr
+        td(align='left')
+          table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+              tr
+                td(style='background:#fff;')
+                 img(src='https://www.mathewmacielmusic.com/img/header/logo.png')
+  p - Mathew Maciel Music

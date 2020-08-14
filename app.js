@@ -15,6 +15,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const musicRouter = require('./routes/musicRoutes');
 const userRouter = require('./routes/usersRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 
 app.set('view engine', 'pug');
@@ -75,38 +76,39 @@ app.use (function (req, res, next) {
 });
 
 
-app.get('/', (req, res) => {
-    res.status(200).render('home');
-});
+// app.get('/', (req, res) => {
+//     res.status(200).render('home');
+// });
 
-app.get('/contact', (req, res) => {
-    res.status(200).render('contact');
-});
+// app.get('/contact', (req, res) => {
+//     res.status(200).render('contact');
+// });
 
-app.get('/about', (req, res) => {
-    res.status(200).render('about');
-});
+// app.get('/about', (req, res) => {
+//     res.status(200).render('about');
+// });
 
-app.get('/bio', (req, res) => {
-    res.status(200).render('bio');
-});
+// app.get('/bio', (req, res) => {
+//     res.status(200).render('bio');
+// });
 
-app.get('/music', (req, res) => {
-    res.status(200).render('music');
-});
+// app.get('/music', (req, res) => {
+//     res.status(200).render('music');
+// });
 
-app.get('/construction', (req, res) => {
-    res.status(200).render('construction');
-});
+// app.get('/construction', (req, res) => {
+//     res.status(200).render('construction');
+// });
 
-app.get('/videos', (req, res) => {
-    res.status(200).render('videos');
-});
+// app.get('/videos', (req, res) => {
+//     res.status(200).render('videos');
+// });
 
 
 // ROUTES
 app.use('/api/v1/music', musicRouter); // gets music routes
 app.use('/api/v1/users', userRouter); // get user routes
+app.use('', viewRouter); // get view Routes
 
 // global route
 app.all('*', (req, res, next) => {

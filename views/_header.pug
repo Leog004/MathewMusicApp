@@ -38,6 +38,12 @@ header#top.navbar.navbar-sticky
         a.button.button-small(href='/construction' target='_blank')
           span.zmdi.zmdi-filter-list
           |  Shop Merch
+      if user
+       .call-to-action.col-12.col-sm-auto.order-5.order-sm-2.order-lg-4
+        a.button.button-small#logoutBtn(href='#' style='background:red')
+          span.zmdi.zmdi-filter-list
+          |  Log Out
+
       .site-menu-toggle.col-auto.order-2.order-sm-3
         a(href='#site-menu')
           span.screen-reader-text Toggle navigation

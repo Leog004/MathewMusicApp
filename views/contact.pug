@@ -5,6 +5,7 @@ block append head
     .featured-content {
         background-image: url(https://images.unsplash.com/photo-1459305272254-33a7d593a851?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1520&q=100&h=420);
     }
+    
 
 block content
  header#featured.featured-content.fade-background-50.padding-top-bottom
@@ -44,7 +45,7 @@ block content
               br
               |  mathewmacielmusic@gmail.com
       .col-12.col-md-10.col-lg-8.margin-top-bottom
-        form#contact_form(action='sendmail.php')
+        form#contact_form
           .message(style='display:none')
             #contact_alert.alert aaaa
           .row
@@ -74,9 +75,4 @@ block content
 //-         p    
 
 block append javascript
-    script(src='assets/js/jquery.form.min.js')
-    script.
-        jQuery(function(){
-        // initialize ajax form plugin
-        jQuery('#contact_form').ajaxForm({ target: '#contact_alert' });
-        });
+  script(src='/js/bundle.js')
