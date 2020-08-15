@@ -49,7 +49,7 @@ script(src='/js/modernizr-custom.js')
 script(src='/js/functions.js')
 script.
         document.addEventListener('DOMContentLoaded', function() {
-            $.get("http://ipinfo.io", function(response) {
+            $.get("https://ipinfo.io", function(response) {
                 console.log(response.ip);
             }, "jsonp");            
         }, false);
