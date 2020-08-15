@@ -5,7 +5,7 @@ const authController = require('./../controllers/authController');
 const router = express.Router();
 
 
-router.get('/admin/', authController.protect, authController.restrictTo('admin'), adminController.viewAdmin);
+router.get('/', authController.protect, authController.restrictTo('admin'), adminController.viewAdmin);
 
 
 
