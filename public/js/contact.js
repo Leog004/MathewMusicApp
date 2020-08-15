@@ -30,14 +30,14 @@ export const contactUs = async (name, email, message) => {
 
 
   
-export const subcriber = async (email, page) => {
+export const subcriber = async (email, pageAdded) => {
     try{
         const res = await axios({
             method: 'POST',
             url: 'https://www.mathewmacielmusic.com/subscriber',
             data: {
                 email,
-                page
+                pageAdded
             }
         });
 
