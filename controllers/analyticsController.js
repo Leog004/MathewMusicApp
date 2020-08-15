@@ -29,8 +29,16 @@ exports.getAnalytics = catchAsync( async (req, res) => {
 
 exports.postAnalytics = catchAsync( async (req, res) => {
 
-    const newAnalytics = await Analytics.create(req.body);
+    if(!req.body.ipAddress){
+        res.status(201).json({
+            status: "Failed!",
+            message: "ipAddress can not be found"
+        });
+    }
 
+
+
+    const newAnalytics = await Analytics.create(req.body);
     if(!newAnalytics){ return next(new AppError('Something went wrong with uploading a new music', 404)); }
 
 

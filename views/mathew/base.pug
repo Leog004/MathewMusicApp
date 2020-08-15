@@ -49,9 +49,17 @@ script(src='/js/modernizr-custom.js')
 script(src='/js/functions.js')
 script.
         document.addEventListener('DOMContentLoaded', function() {
+            var ip = '000.000.000';
+
             $.get("https://ipinfo.io", function(response) {
-                console.log(response.ip);
-            }, "jsonp");            
+                ip = response.ip;
+                console.log(ip);
+            }, "jsonp");
+
+            $.post("/api/v1/analytics/", {ipAddress : ip}, function(data, status){
+                console.log(`Data: ${JSON.stringify(data)} Status:${status}`);
+            });            
+
         }, false);
 
 
