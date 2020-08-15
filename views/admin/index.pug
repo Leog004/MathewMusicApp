@@ -1,0 +1,185 @@
+doctype html
+html.loading(lang='en', data-textdirection='ltr')
+  // BEGIN: Head
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui')
+    meta(name='description', content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google.")
+    meta(name='keywords', content='materialize, admin template, dashboard template, flat admin template, responsive admin template, eCommerce dashboard, analytic dashboard')
+    meta(name='author', content='ThemeSelect')
+    title Dashboard Modern | Materialize - Material Design Admin Template
+    link(rel='apple-touch-icon', href='/app-assets/images/favicon/apple-touch-icon-152x152.png')
+    link(rel='shortcut icon', type='image/x-icon', href='/app-assets/images/favicon/favicon-32x32.png')
+    link(href='https://fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    // BEGIN: VENDOR CSS
+    link(rel='stylesheet', type='text/css', href='/app-assets/vendors/vendors.min.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/vendors/animate-css/animate.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/vendors/chartist-js/chartist.min.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/vendors/chartist-js/chartist-plugin-tooltip.css')
+    // END: VENDOR CSS
+    // BEGIN: Page Level CSS
+    link(rel='stylesheet', type='text/css', href='/app-assets/css/themes/vertical-modern-menu-template/materialize.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/css/themes/vertical-modern-menu-template/style.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/css/pages/dashboard-modern.css')
+    link(rel='stylesheet', type='text/css', href='/app-assets/css/pages/intro.css')
+    // END: Page Level CSS
+    // BEGIN: Custom CSS
+    link(rel='stylesheet', type='text/css', href='/app-assets/css/custom/custom.css')
+    // END: Custom CSS
+    style.
+      .brand-sidebar .logo-wrapper a.brand-logo img {
+          height: 50px;
+          width: 150px;
+          margin: 0 auto;
+          align-items: center;
+          /* left: 50%; */
+      }
+      .brand-sidebar .brand-logo {
+          font-size: 2.1rem;
+          line-height: 0;
+          position: absolute;
+          display: inline-block;
+          /* margin: 1px 0; */
+          margin: 0;
+          text-align:left;
+          width: 100%;
+          padding: 10px 22px 22px 40px;
+          color: #333;
+      }
+    // END: Head
+    body.vertical-layout.vertical-menu-collapsible.page-header-dark.vertical-modern-menu.preload-transitions.2-columns(data-open='click', data-menu='vertical-modern-menu', data-col='2-columns')
+      // BEGIN: Header
+      include _header
+      // END: Header
+      
+      // BEGIN: SideNav
+      aside.sidenav-main.nav-expanded.nav-lock.nav-collapsible.sidenav-light.sidenav-active-square
+        .brand-sidebar
+          h1.logo-wrapper
+            a.brand-logo.darken-1(href='/')
+              img.hide-on-med-and-down(src='/app-assets/images/logo/lgnd.png', alt='lgnd logo')
+              img.show-on-medium-and-down.hide-on-med-and-up(src='http://lgnetworkdesign.com/img/whitelgnd.png', style='width:unset;height:25px;' alt='lgnd logo')
+              //- span.logo-text.hide-on-med-and-down 
+            a.navbar-toggler(href='#')
+              i.material-icons radio_button_checked
+        ul#slide-out.sidenav.sidenav-collapsible.leftside-navigation.collapsible.sidenav-fixed.menu-shadow(data-menu='menu-navigation', data-collapsible='menu-accordion')
+          li.active.bold
+            a.waves-effect.waves-cyan(href='JavaScript:void(0)')
+              i.material-icons settings_input_svideo
+              span.menu-title(data-i18n='Dashboard') Dashboard
+          li.bold
+            a.collapsible-header.waves-effect.waves-cyan(href='JavaScript:void(0)')
+              i.material-icons dvr
+              span.menu-title(data-i18n='WebPages') Web Pages
+            .collapsible-body
+                    ul.collapsible(data-collapsible='accordion')
+                      li
+                        a(href='../vertical-modern-menu-template/')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='Modern Menu') Home
+                      li
+                        a(href='../vertical-menu-nav-dark-template/')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='Navbar Dark') About
+                      li
+                        a(href='../vertical-gradient-menu-template/')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='Gradient Menu') Bio
+                      li
+                        a(href='../vertical-dark-menu-template/')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='Dark Menu') Music
+                      li
+                        a(href='../vertical-dark-menu-template/')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='Dark Menu') Videos
+      // END: SideNav
+      // BEGIN: Page Main
+      #main
+        .row
+          .content-wrapper-before.gradient-45deg-indigo-purple
+          .col.s12
+            .container
+              .section
+                .row
+                  .col.s12.m6.l4
+                    .card.padding-4.animate.fadeLeft
+                      .row
+                        .col.s5.m5
+                          h5.mb-0 1885
+                          p.no-margin Hits
+                        .col.s7.m7.right-align
+                          i.material-icons.background-round.mt-5.mb-5.gradient-45deg-purple-amber.gradient-shadow.white-text perm_identity
+                          p.mb-0 Total Views
+                    #chartjs.card.pt-0.pb-0.animate.fadeLeft
+                      .dashboard-revenue-wrapper.padding-2.ml-2
+                        span.new.badge.gradient-45deg-indigo-purple.gradient-shadow.mt-2.mr-2 + $0
+                        p.mt-2.mb-0.font-weight-600 Today's revenue
+                        p.no-margin.grey-text.lighten-3 $0 avg
+                        h5 $ 0
+                      .sample-chart-wrapper.card-gradient-chart
+                        canvas#custom-line-chart-sample-three.center
+                  .col.s12.m6.l8
+                    .card.subscriber-list-card.animate.fadeRight
+                      .card-content.pb-1
+                        h4.card-title.mb-0
+                          | Subscriber List 
+                          i.material-icons.float-right more_vert
+                      table.subscription-table.responsive-table.highlight
+                        thead
+                          tr
+                            th Email
+                            th Page Requested
+                            th Date Added
+                            th Status
+                            th Action
+                        tbody
+                          tr
+                            td Michael Austin
+                            td ABC Fintech LTD.
+                            td Jan 1,2019
+                            td
+                              span.badge.pink.lighten-5.pink-text.text-accent-2 subscribed
+                            td.center-align
+                              a(href='#')
+                                i.material-icons.pink-text clear
+              // START RIGHT SIDEBAR NAV
+ 
+              // END RIGHT SIDEBAR NAV
+              // Intro
+
+              // / Intro
+            .content-overlay
+      // END: Page Main
+      // BEGIN: Footer
+      footer.page-footer.footer.footer-static.footer-dark.gradient-45deg-indigo-purple.gradient-shadow.navbar-border.navbar-shadow
+        .footer-copyright
+          .container
+            span
+              | © 2020          
+              a(href='http://lgnetworkdesign.com/', target='_blank') LG Network Design
+              |  All rights reserved.
+            span.right.hide-on-small-only
+              | Design and Developed by 
+              a(href='http://lgnetworkdesign.com/') LGND
+      // END: Footer
+      // BEGIN VENDOR JS
+      script(src='/app-assets/js/vendors.min.js')
+      // BEGIN VENDOR JS
+      // BEGIN PAGE VENDOR JS
+      script(src='/app-assets/vendors/chartjs/chart.min.js')
+      script(src='/app-assets/vendors/chartist-js/chartist.min.js')
+      script(src='/app-assets/vendors/chartist-js/chartist-plugin-tooltip.js')
+      script(src='/app-assets/vendors/chartist-js/chartist-plugin-fill-donut.min.js')
+      // END PAGE VENDOR JS
+      // BEGIN THEME  JS
+      script(src='/app-assets/js/plugins.js')
+      script(src='/app-assets/js/search.js')
+      script(src='/app-assets/js/custom/custom-script.js')
+      script(src='/app-assets/js/scripts/customizer.js')
+      // END THEME  JS
+      // BEGIN PAGE LEVEL JS
+      script(src='/app-assets/js/scripts/dashboard-modern.js')
+      script(src='/app-assets/js/scripts/intro.js')
+      // END PAGE LEVEL JS

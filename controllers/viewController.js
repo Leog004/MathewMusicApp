@@ -21,44 +21,44 @@ exports.checkBodyForEmail = (req, res, next) =>  {
 
 
 exports.getHomePage = (req, res) => {
-    res.status(200).render('home', {
+    res.status(200).render('mathew/home', {
         Title: 'Mathew Maciel - Home Page'
     });
 };
 
 exports.getContactPage = (req, res) => {
-    res.status(200).render('contact',{
+    res.status(200).render('mathew/contact',{
         Title: 'Mathew Maciel - Contact Page'
     });
 }
 
 exports.getMusicPage = (req, res) => {
-    res.status(200).render('music',{
+    res.status(200).render('mathew/music',{
         Title: 'Mathew Maciel - Music Page'
     });  
 }
 
 exports.getVideoPage = (req, res) => {
-    res.status(200).render('videos',{
+    res.status(200).render('mathew/videos',{
         Title: 'Mathew Maciel - Video Page'
     });
 }
 
 exports.getBioPage = (req, res) =>{
-    res.status(200).render('bio',{
+    res.status(200).render('mathew/bio',{
         Title: 'Mathew Maciel - Bio Page'
     });
 }
 
 exports.getAboutPage = (req, res) => {
-    res.status(200).render('about',{
+    res.status(200).render('mathew/about',{
         Title: 'Mathew Maciel - About Page'
     });
 }
 
 
 exports.getConstructionPage = (req, res) => {
-    res.status(200).render('about',{
+    res.status(200).render('mathew/construction',{
         Title: 'Mathew Maciel - Construction Page'
     });  
 }
@@ -128,3 +128,9 @@ exports.postSubscriber = catchAsync( async(req, res) => {
       });
 
 });
+
+
+
+exports.viewAdmin = (req, res) => {
+    res.status(200).render('admin/index');
+}
