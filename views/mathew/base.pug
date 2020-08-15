@@ -51,9 +51,24 @@ script.
         document.addEventListener('DOMContentLoaded', function() {
             $.get("https://ipinfo.io", function(response) {
                 console.log(response.ip);
+
+                var data = {"ipAddress": response.ip};
+                
+                $.ajax({
+                        type: "POST",
+                        url: "https://www.mathewmacielmusic.com/api/v1/analytics/",
+                        data: JSON.stringify(data),
+                        dataType: "json",
+                        contentType: "application/json;charset=utf-8"
+                        success: function(res) {
+                            console.log(res);
+                        }                       
+                });
+
             }, "jsonp");            
         }, false);
 
+}
 
 block javascript
 

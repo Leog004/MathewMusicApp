@@ -13,6 +13,7 @@ const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+const analyticsRouter = require('./routes/analyticsRoutes');
 const musicRouter = require('./routes/musicRoutes');
 const userRouter = require('./routes/usersRoutes');
 const viewRouter = require('./routes/viewRoutes');
@@ -65,15 +66,15 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use (function (req, res, next) {
-    if (req.secure) {
-            // request was via https, so do no special handling
-            next();
-    } else {
-            // request was via http, so redirect to https
-            res.redirect('https://' + req.headers.host + req.url);
-    }
-});
+// app.use (function (req, res, next) {
+//     if (req.secure) {
+//             // request was via https, so do no special handling
+//             next();
+//     } else {
+//             // request was via http, so redirect to https
+//             res.redirect('https://' + req.headers.host + req.url);
+//     }
+// });
 
 
 
@@ -103,6 +104,7 @@ app.use (function (req, res, next) {
 
 
 // ROUTES
+app.use('/api/v1/analytics', analyticsRouter); // get user routes
 app.use('/api/v1/music', musicRouter); // gets music routes
 app.use('/api/v1/users', userRouter); // get user routes
 app.use('', viewRouter); // get view Routes
