@@ -22,6 +22,5 @@ router.get('/login', viewController.login);
 router.post('/contact', viewController.postContact);
 router.post('/subscriber', viewController.postSubscriber);
 
-router.get('/admin/', authController.protect, authController.restrictTo('admin'), viewController.viewAdmin);
 
 module.exports = router;

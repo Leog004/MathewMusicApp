@@ -129,8 +129,3 @@ exports.postSubscriber = catchAsync( async(req, res) => {
 
 });
 
-
-
-exports.viewAdmin = (req, res) => {
-    res.status(200).render('admin/index');
-}
