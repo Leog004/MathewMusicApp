@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const subscriberSchema = new mongoose.Schema({
 
-    emailAddress: {
+    email: {
         type: String,
         unique: [true, 'You have already submitted your email!']
     },

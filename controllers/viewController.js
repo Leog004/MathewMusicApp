@@ -115,15 +115,15 @@ exports.postSubscriber = catchAsync( async(req, res) => {
         return next(new AppError('Please provide email and message!', 400));
     }
 
-    const newSubscriber = await Subscriber.create(email);
+    const newSubscriber = await Subscriber.create(req.body);
 
-    const toHost_ = await {
-        email: 'mathewmacielmusic@gmail.com',
-        userEmail: req.body.email
-    };
+    // const toHost_ = await {
+    //     email: 'mathewmacielmusic@gmail.com',
+    //     userEmail: req.body.email
+    // };
 
-    const url = `${req.protocol}://${req.get('host')}/`;
-    await new Email(toHost_, url).sendToHostSubscriber();
+    // const url = `${req.protocol}://${req.get('host')}/`;
+    // await new Email(toHost_, url).sendToHostSubscriber();
 
     res.status(200).json({
         status: 'success',
@@ -135,3 +135,19 @@ exports.postSubscriber = catchAsync( async(req, res) => {
 
 });
 
+
+exports.getSubscriber = catchAsync(async(req, res) => {
+
+    const subscribers = await Subscriber.find();
+
+    if(!subscribers){
+        return next(new AppError('Can not find any subscribers', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        results : subscribers.length,
+        data: subscribers
+    })
+
+});

@@ -18,7 +18,7 @@ router.get('/construction', viewController.getConstructionPage);
 
 router.get('/login', viewController.login);
 
-
+router.get('/subscriber', viewController.getSubscriber);
 router.post('/contact', viewController.postContact);
 router.post('/subscriber', viewController.postSubscriber);
 
