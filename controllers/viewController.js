@@ -3,7 +3,7 @@ const APIFeatures = require('./../utils/apiFeatures');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
-
+const Subscriber = require('../models/subscriber');
 
 
 
@@ -106,13 +106,16 @@ exports.postContact = catchAsync( async (req, res) => {
 
 
 exports.postSubscriber = catchAsync( async(req, res) => {
+
     const email = req.body.email;
-    console.log(req.body);
+   
 
     // Check if email exists
     if(!email){
         return next(new AppError('Please provide email and message!', 400));
     }
+
+    const newSubscriber = await Subscriber.create(email);
 
     const toHost_ = await {
         email: 'mathewmacielmusic@gmail.com',
@@ -124,7 +127,10 @@ exports.postSubscriber = catchAsync( async(req, res) => {
 
     res.status(200).json({
         status: 'success',
-        message: 'email sent!'
+        message: 'email sent!',
+        data:{ 
+            subscriber: newSubscriber
+        }
       });
 
 });

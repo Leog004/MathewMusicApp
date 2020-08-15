@@ -40,8 +40,9 @@ if(subsciberForm){
     subsciberForm.addEventListener('submit', e => {
         e.preventDefault();
         const email = document.getElementById('subscribe_email').value;
+        const page = window.location.href;
         console.log(email);
-        subcriber(email);
+        subcriber(email, page);
     });  
 }
 
