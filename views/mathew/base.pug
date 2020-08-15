@@ -53,12 +53,14 @@ script.
 
             $.get("https://ipinfo.io", function(response) {
                 ip = response.ip;
-                console.log(ip);
+                
+                $.post("/api/v1/analytics/", {ipAddress : ip}, function(data, status){
+                    console.log(`Data: ${JSON.stringify(data)} Status:${status}`);
+                }); 
+
             }, "jsonp");
 
-            $.post("/api/v1/analytics/", {ipAddress : ip}, function(data, status){
-                console.log(`Data: ${JSON.stringify(data)} Status:${status}`);
-            });            
+           
 
         }, false);
 
