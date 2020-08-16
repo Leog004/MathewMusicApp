@@ -3,6 +3,19 @@ import { showAlert } from './alerts';
 import Swal from 'sweetalert2'
 
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+
 export const editPage = async( ...values ) => {
 
     const {id, title, album, lyrics} = values[0];
@@ -20,14 +33,16 @@ export const editPage = async( ...values ) => {
         });
         
         if (res.data.status === 'success') {
-          showAlert('success', 'music edit is successfully changed!');
+
+          Toast.fire({ icon: 'success', title: 'update successfully'})
           window.setTimeout(() => {
-            location.assign('/admin/');
+            location.reload();
           }, 1500);
+
         }
       } catch (err) {
         console.log(err);
-        showAlert('error', err.response.data.message.toUpperCase());
+        Toast.fire({ icon: 'warning', title: 'Failed, please try again!'})
       }
 
 }
