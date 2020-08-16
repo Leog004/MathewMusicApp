@@ -108,7 +108,7 @@ exports.postContact = catchAsync( async (req, res) => {
 exports.postSubscriber = catchAsync( async(req, res) => {
 
     const email = req.body.email;
-   
+    console.log(req.body);
 
     // Check if email exists
     if(!email){

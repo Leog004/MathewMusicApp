@@ -31,6 +31,7 @@ export const contactUs = async (name, email, message) => {
 
   
 export const subcriber = async (email, pageAdded) => {
+
     try{
         const res = await axios({
             method: 'POST',
@@ -47,7 +48,6 @@ export const subcriber = async (email, pageAdded) => {
                 location.assign('/');
             }, 1500);
         }
-        //console.log(res);
     }
     catch(err){
         console.log(err);

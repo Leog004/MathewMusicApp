@@ -132,7 +132,6 @@ html.loading(lang='en', data-textdirection='ltr')
                             th Email
                             th Page Requested
                             th Date Added
-                            th Status
                             th Action
                         tbody
                          each subs in getSubscribers
@@ -140,8 +139,8 @@ html.loading(lang='en', data-textdirection='ltr')
                             td= subs.email
                             td= subs.pageAdded.replace('https://www.', '')
                             td= subs.createdAt.toString().replace('GMT-0500 (Central Daylight Time)', '')
-                            td
-                              span.badge.pink.lighten-5.pink-text.text-accent-2 subscribed
+                            //- td
+                            //-   span.badge.pink.lighten-5.pink-text.text-accent-2 subscribed
                             td.center-align
                               a(href='#')
                                 i.material-icons.pink-text clear
