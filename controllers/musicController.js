@@ -71,7 +71,7 @@ exports.editMusic = catchAsync(async (req, res) => {
 
 
     res.status(200).json({
-        status: 'Success', 
+        status: 'success', 
         data: {
             music
         }
