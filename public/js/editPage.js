@@ -10,7 +10,7 @@ export const editPage = async( ...values ) => {
 
     try {
         const res = await axios({
-          method: 'POST',
+          method: 'PATCH',
           url: `https://www.mathewmacielmusic.com/api/v1/music/${id}`,
           data: {
               title,
