@@ -2,15 +2,19 @@ import '@babel/polyfill'
 import {instagramPhotos} from './getInstagram'
 import { login, logout } from './login';
 import {contactUs, subcriber} from './contact';
+import {editPage} from './editPage';
 
 const loginForm = document.querySelector('#loginForm');
 const logOutBtn = document.querySelector('#logoutBtn');
 const contactForm = document.querySelector('#contact_form');
 const subsciberForm = document.querySelector('#subscribeForm');
 
+const editMusicButton = document.querySelectorAll('.editButton');
+
 var instagramRows = document.getElementById('instaRow');
 const position = 'beforeend';
 var html = '';
+
 
 if(instagramRows){
     instagramPhotos().then(val => {
@@ -70,3 +74,20 @@ if (loginForm){
 }
 
 if (logOutBtn) logOutBtn.addEventListener('click', logout);
+
+
+if(editMusicButton){
+    
+    editMusicButton.forEach(function(userItem) {
+        userItem.addEventListener('click', e => {
+            e.preventDefault();
+            const id = e.target.id.replace('edit_', '');
+            const title = 'testing title';
+            const lyrics = 'fake lyrics here';
+            const album = 'album test';
+
+            const values = {id, title, lyrics, album};
+            editPage(values);            
+        });
+      });
+}

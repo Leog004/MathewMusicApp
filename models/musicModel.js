@@ -8,18 +8,20 @@ const musicSchema = new mongoose.Schema({
         unique: true
     },
     slug: String,
-    description: {
+    lyrics: {
         type: String
     },
-    youtubeURL:{
-        type: String 
+    image: {
+        type: String
     },
+    album:{ String},
+    DateReleased: { String},
+    HashTags: [String],
     spotifyURL:{
         type: String 
     },
-    iTunesURL: {
-        type: String 
-    },
+    onHomePage: Boolean,
+    show: Boolean,
     createdAt:{
         type: Date,
         default: Date.now(),

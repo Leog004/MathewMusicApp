@@ -60,53 +60,42 @@ html.loading(lang='en', data-textdirection='ltr')
       #main
         .row
           .content-wrapper-before.gradient-45deg-indigo-purple
+          #breadcrumbs-wrapper.breadcrumbs-dark.pb-0.pt-4
+           .container
+             .row
+               .col.s10.m6.l6
+                 h5.breadcrumbs-title.mt-0.mb-0
+                   span Music Page
+                 ol.breadcrumbs.mb-0
+                   li.breadcrumb-item
+                     a(href='/admin/') Home
+                   li.breadcrumb-item.active
+                     | Your Music
           .col.s12
             .container
               .section
                 .row
-                  .col.s12.m6.l4
-                    .card.padding-4.animate.fadeLeft
-                      .row
-                        .col.s5.m5
-                          h5.mb-0 #{analyticsLength}
-                          p.no-margin Hits
-                        .col.s7.m7.right-align
-                          i.material-icons.background-round.mt-5.mb-5.gradient-45deg-purple-amber.gradient-shadow.white-text perm_identity
-                          p.mb-0 Total Views
-                    #chartjs.card.pt-0.pb-0.animate.fadeLeft
-                      .dashboard-revenue-wrapper.padding-2.ml-2
-                        span.new.badge.gradient-45deg-indigo-purple.gradient-shadow.mt-2.mr-2 + $0
-                        p.mt-2.mb-0.font-weight-600 Today's revenue
-                        p.no-margin.grey-text.lighten-3 $0 avg
-                        h5 $ 0
-                      .sample-chart-wrapper.card-gradient-chart
-                        canvas#custom-line-chart-sample-three.center
-                  .col.s12.m6.l8
-                    .card.subscriber-list-card.animate.fadeRight
-                      .card-content.pb-1
-                        h4.card-title.mb-0
-                          | Subscriber List 
-                          i.material-icons.float-right more_vert
-                      table.subscription-table.responsive-table.highlight
-                        thead
-                          tr
-                            th Email
-                            th Page Requested
-                            th Date Added
-                            th Action
-                        tbody
-                         each subs in getSubscribers
-                          tr
-                            td= subs.email
-                            td= subs.pageAdded.replace('https://www.', '')
-                            td= subs.createdAt.toString().replace('GMT-0500 (Central Daylight Time)', '').replace('GMT+0000 (Coordinated Universal Time)', '')
-                            //- td
-                            //-   span.badge.pink.lighten-5.pink-text.text-accent-2 subscribed
-                            td.center-align
-                              a(href='#')
-                                i.material-icons.pink-text clear
+                each music in getMusic
+                 .col.s12.m6.l6(style='margin: 40px 0')
+                      .card.horizontal.border-radius-6
+                         .card-image
+                           a(href='#')
+                            img.responsive-img.image-n-margin(src=`/img/${music.image}`, alt='')
+                         .card-stacked
+                          .card-content.pl-7.pt-7.pr-7.pb-7
+                            h6(style='font-weight:600')=music.title
+                            p.mb-4=music.lyrics.substring(0,120) + '...'
+                          .card-action.pt-4.pb-3
+                            .display-flex
+                              .display-flex.mr-10
+                                a.btn.gradient-45deg-light-blue-cyan.gradient-shadow.editButton(href='#' id=`edit_${music.id}`)
+                                 | Edit
+                              .display-flex.mr-10
+                                a.btn.dropdown-settings.waves-effect.waves-light.breadcrumbs-btn(href='#' data-identifier=`${music.id}`)
+                                 | Delete
+
               // START RIGHT SIDEBAR NAV
- 
+
               // END RIGHT SIDEBAR NAV
               // Intro
 

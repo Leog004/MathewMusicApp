@@ -6,8 +6,10 @@ const router = express.Router();
 
 
 router.get('/', authController.protect, authController.restrictTo('admin'), adminController.viewAdmin);
+router.get('/music', authController.protect, authController.restrictTo('admin'), adminController.viewAdminMusic);
 
-//router.get('/', adminController.viewAdmin);
+// router.get('/', adminController.viewAdmin);
+// router.get('/music', adminController.viewAdminMusic);
 
 
 module.exports = router;

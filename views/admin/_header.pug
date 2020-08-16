@@ -91,3 +91,43 @@ header#header.page-topbar
                       i.material-icons.search-sm-icon search
                     i.material-icons.search-sm-close close
                     ul.search-list.collection.search-list-sm.display-none
+        aside.sidenav-main.nav-expanded.nav-lock.nav-collapsible.sidenav-light.sidenav-active-square
+         .brand-sidebar
+          h1.logo-wrapper
+            a.brand-logo.darken-1(href='/')
+              img.hide-on-med-and-down(src='/app-assets/images/logo/lgnd.png', alt='lgnd logo')
+              img.show-on-medium-and-down.hide-on-med-and-up(src='http://lgnetworkdesign.com/img/whitelgnd.png', style='width:unset;height:25px;' alt='lgnd logo')
+              //- span.logo-text.hide-on-med-and-down 
+            a.navbar-toggler(href='#')
+              i.material-icons radio_button_checked
+         ul#slide-out.sidenav.sidenav-collapsible.leftside-navigation.collapsible.sidenav-fixed.menu-shadow(data-menu='menu-navigation', data-collapsible='menu-accordion')
+          li.active.bold
+            a.waves-effect.waves-cyan(href='JavaScript:void(0)')
+              i.material-icons settings_input_svideo
+              span.menu-title(data-i18n='Dashboard') Dashboard
+          li.bold
+            a.collapsible-header.waves-effect.waves-cyan(href='JavaScript:void(0)')
+              i.material-icons dvr
+              span.menu-title(data-i18n='WebPages') Web Pages
+            .collapsible-body
+                    ul.collapsible(data-collapsible='accordion')
+                      li
+                        a(href='/admin/home')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='/home') Home
+                      li
+                        a(href='/admin/about')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='/about') About
+                      li
+                        a(href='/admin/bio')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='/bio') Bio
+                      li
+                        a(href='/admin/music')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='/music') Music
+                      li
+                        a(href='/admin/videos')
+                          i.material-icons radio_button_unchecked
+                          span(data-i18n='/videos') Videos           
