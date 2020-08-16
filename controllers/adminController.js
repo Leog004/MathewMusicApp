@@ -24,8 +24,6 @@ exports.viewAdmin = catchAsync( async(req, res) => {
     res.status(200).render('admin/index',{
         title: 'Mathew Marciel Music - Admin Page',
         analyticsLength : getAnalytics.length,
-        data: {
-            subscriber : getSubscribers
-        }
+        getSubscribers
     });
 });

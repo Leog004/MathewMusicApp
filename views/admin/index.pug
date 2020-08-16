@@ -135,10 +135,11 @@ html.loading(lang='en', data-textdirection='ltr')
                             th Status
                             th Action
                         tbody
+                         each subs in getSubscribers
                           tr
-                            td Michael Austin
-                            td ABC Fintech LTD.
-                            td Jan 1,2019
+                            td= subs.email
+                            td= subs.pageAdded.replace('https://www.', '')
+                            td= subs.createdAt.toString().replace('GMT-0500 (Central Daylight Time)', '')
                             td
                               span.badge.pink.lighten-5.pink-text.text-accent-2 subscribed
                             td.center-align
