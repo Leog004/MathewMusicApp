@@ -18,6 +18,7 @@ exports.GetAllMusic = async () => {
           spotifyUrl
           releasedDate
           showOnWeb
+          showOnHomePage
         }
       }
       `;
