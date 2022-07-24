@@ -53,3 +53,17 @@ exports.GetFeaturedSong = async () => {
 
 }
 
+exports.GetAllVideos = async () => {
+    const query = gql`
+    query GetAllVideos {
+        videos {
+          id
+          youTubeUrl
+        }
+      }      
+    `
+
+    const result = await request(graphqlAPI, query); // get our response from api call  
+    return result.videos; // return data
+}
+
