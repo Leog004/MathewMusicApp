@@ -64,38 +64,39 @@ block content
               | Browse 
               em Music
           each entry in music
-            article.entry.entry-episode
-              .row.align-items-lg-center
-                .col-12.col-md-4.col-xl-3
-                  .entry-media.entry-image.multiply-effect
-                    a(href='/img/ThinkOfMe.png')
-                      img.first(src=entry.albumImage.url width='736' height='736' alt='')
-                      span.second
-                        img(src=entry.albumImage.url width='736' height='736' alt='')
-                      span.third
-                        img(src=entry.albumImage.url width='736' height='736' alt='')
-                .col-12.col-md-8.col-xl-9
-                  header.entry-header
-                    .entry-meta
-                      span.posted-in
-                        span.screen-reader-text Posted in: 
+            if entry.showOnHomePage
+              article.entry.entry-episode
+                .row.align-items-lg-center
+                  .col-12.col-md-4.col-xl-3
+                    .entry-media.entry-image.multiply-effect
+                      a(href='/img/ThinkOfMe.png')
+                        img.first(src=entry.albumImage.url width='736' height='736' alt='')
+                        span.second
+                          img(src=entry.albumImage.url width='736' height='736' alt='')
+                        span.third
+                          img(src=entry.albumImage.url width='736' height='736' alt='')
+                  .col-12.col-md-8.col-xl-9
+                    header.entry-header
+                      .entry-meta
+                        span.posted-in
+                          span.screen-reader-text Posted in: 
+                          a(href='#' rel='bookmark')= entry.title
+                        span.posted-on
+                          span.screen-reader-text Posted on: 
+                          a(href='#' rel='bookmark')
+                            time.entry-date.published(datetime='2020-03-26T14:48:37+00:00')= new Date(entry.releasedDate).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
+                        span.tags
+                          span.screen-reader-text Tagged:
+                          for tags in entry.musicHashTags
+                            a(rel='tag' href='#')= tags 
+                            | , 
+                      h2.entry-title
                         a(href='#' rel='bookmark')= entry.title
-                      span.posted-on
-                        span.screen-reader-text Posted on: 
-                        a(href='#' rel='bookmark')
-                          time.entry-date.published(datetime='2020-03-26T14:48:37+00:00')= new Date(entry.releasedDate).toLocaleDateString('en-US', {month: 'long', day: 'numeric', year: 'numeric'})
-                      span.tags
-                        span.screen-reader-text Tagged:
-                        for tags in entry.musicHashTags
-                          a(rel='tag' href='#')= tags 
-                          | , 
-                    h2.entry-title
-                      a(href='#' rel='bookmark')= entry.title
-                  .entry-content
-                    p= '"' + entry.lyrics
-                      | &mldr; " 
-                      a(href='/construction') (read more)
-                  iframe(src=entry.spotifyUrl.replace('/track', '/embed/track') width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
+                    .entry-content
+                      p= '"' + entry.lyrics
+                        | &mldr; " 
+                        a(href='/construction') (read more)
+                    iframe(src=entry.spotifyUrl.replace('/track', '/embed/track') width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
         //-   .pagination.pagination-load-more
         //-     a.button.button-filled(href='#')
         //-       span.zmdi.zmdi-more

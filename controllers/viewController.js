@@ -40,11 +40,13 @@ exports.getContactPage = (req, res) => {
     });
 }
 
-exports.getMusicPage = (req, res) => {
+exports.getMusicPage = catchAsync ( async (req, res) => {
+    const music = await GetAllMusic();
     res.status(200).render('mathew/music',{
-        Title: 'Mathew Maciel - Music Page'
+        Title: 'Mathew Maciel - Music Page',
+        music
     });  
-}
+});
 
 exports.getVideoPage = (req, res) => {
     res.status(200).render('mathew/videos',{
