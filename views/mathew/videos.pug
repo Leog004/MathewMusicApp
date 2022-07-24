@@ -24,11 +24,9 @@ block content
             span
               | All 
               em Videos
-          each entry in videos
             article.entry.entry-episode
               .row.align-items-lg-center
-                .col-12.col-md-6.col-xl-6   
-                  iframe(width='500' height='300' src=entry.youtubeUrl.replace('watchv', '/embed/') frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-                .col-12.col-md-6.col-xl-6
-                  iframe(width='500' height='300' src=entry.youtubeUrl.replace('watchv', '/embed/') frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                each entry in videos
+                  .col-12.col-md-6.col-xl-6   
+                    iframe(src=entry.youTubeUrl.replace('/watchv', '/embed/') width='500' height='300' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
