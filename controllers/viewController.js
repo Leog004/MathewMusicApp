@@ -4,7 +4,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
 const Subscriber = require('../models/subscriber');
-const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio } = require('../utils/graphql');
+const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout } = require('../utils/graphql');
 
 
 
@@ -66,11 +66,13 @@ exports.getBioPage = catchAsync ( async (req, res) => {
     });
 });
 
-exports.getAboutPage = (req, res) => {
+exports.getAboutPage = catchAsync ( async (req, res) => {
+    const about = await GetAbout();
     res.status(200).render('mathew/about',{
-        Title: 'Mathew Maciel - About Page'
+        Title: 'Mathew Maciel - About Page',
+        about
     });
-}
+});
 
 
 exports.getConstructionPage = (req, res) => {

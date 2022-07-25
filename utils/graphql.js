@@ -90,3 +90,24 @@ exports.GetBio = async () => {
     return result.bios; // return data
 }
 
+exports.GetAbout = async () => {
+    const query = gql`
+    query GetAbout {
+        abouts(first: 1) {
+          aboutImage {
+            url
+          }
+          aboutParagraphs
+          aboutTitle
+          id
+          images {
+            url
+          }
+        }
+      }
+       
+    `;
+
+    const result = await request(graphqlAPI, query); // get our response from api call  
+    return result.abouts; // return data
+}
