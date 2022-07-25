@@ -67,3 +67,26 @@ exports.GetAllVideos = async () => {
     return result.videos; // return data
 }
 
+exports.GetBio = async () => {
+    const query = gql`
+    query GetBio {
+        bios(first: 1) {
+          bioTitle
+          id
+          performedAt
+          radioPlay {
+            title
+            text
+          }
+          addToBio {
+            text
+            title
+          }
+        }
+      }    
+    `;
+
+    const result = await request(graphqlAPI, query); // get our response from api call  
+    return result.bios; // return data
+}
+
