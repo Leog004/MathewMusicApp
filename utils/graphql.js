@@ -58,7 +58,7 @@ exports.GetAllVideos = async () => {
     query GetAllVideos {
         videos {
           id
-          youTubeUrl
+          youtubeVideoUrl
         }
       }      
     `
