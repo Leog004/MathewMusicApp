@@ -28,5 +28,5 @@ block content
               .row.align-items-lg-center
                 each entry in videos[0]?.youtubeVideoUrl
                   .col-12.col-md-6.col-xl-6   
-                    iframe(src=entry.youTubeUrl.replace('/watchv', '/embed/') width='500' height='300' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+                    iframe(src=entry.replace('/watchv', '/embed/') width='500' height='300' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
