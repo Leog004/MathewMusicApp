@@ -108,16 +108,14 @@ block content
           | Latest 
           em Video
       .row
-        .col-12.col-md-6
-          article.entry.entry-post
-            header.entry-header
-              .categories 
-               <iframe width="500" height="250" src="https://www.youtube.com/embed/-hIuXsVOxEM?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        .col-12.col-md-6
-          article.entry.entry-post
-            header.entry-header
-              .categories
-               <iframe width="500" height="250" src="https://www.youtube.com/embed/b0IdDGVg8UY?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        //- display featured videos on home page
+        each entry in featuredVideo.featureVideo
+          if entry.show
+            .col-12.col-md-6
+              article.entry.entry-post
+                header.entry-header
+                  .categories 
+                  iframe(src=entry.videoUrl.replace('/watchv', '/embed/')  width="500" height="250" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen)
         a.button.button-filled.button-color(href='https://www.youtube.com/mathewmacielmusic' target='_blank' rel='category tag', style='margin:0 auto;')
             span.zmdi.zmdi-youtube
             | Youtube
