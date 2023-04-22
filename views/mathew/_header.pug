@@ -19,24 +19,28 @@ header#top.navbar.navbar-sticky
             a(href='/contact') Contact
       nav#social-links-menu.col-12.col-md-auto.order-4.order-md-1.order-lg-3
         ul.social-navigation
-          li.menu-item.menu-item-type-custom
-            a(title='Facebook Profile' target='_blank' href='https://www.facebook.com/mathewmacielmusic')
-              span.screen-reader-text Facebook
-          li.menu-item.menu-item-type-custom
-            a(title='Instagram' target='_blank' href='https://www.instagram.com/mathew_maciel/')
-              span.screen-reader-text Instagram
-          li.menu-item.menu-item-type-custom
-            a(title='Twitter Profile' target='_blank' href='https://twitter.com/mathew_maciel')
-              span.screen-reader-text Twitter
-          //- li.menu-item.menu-item-type-custom
-          //-   a(title='SoundCloud' target='_blank' href='https://soundcloud.com/mathew-maciel-music')
-          //-     span.screen-reader-text SoundCloud
-          li.menu-item.menu-item-type-custom
-            a(title='YouTube Channel' target='_blank' href='https://www.youtube.com/mathewmacielmusic')
-              span.screen-reader-text YouTube
-          li.menu-item.menu-item-type-custom
-            a(title='Tik Tok' target='_blank' href='https://www.tiktok.com/@mathewmacielmusic?_t=8aTqoqEdyN4&_r=1')
-              span.screen-reader-text TikTok
+          each entry in getMetaData.socialMedia
+            if entry.showSocialMedia
+              if entry.socialMediaName == 'Facebook'
+                li.menu-item.menu-item-type-custom
+                  a(title='Facebook Profile' target='_blank' href=entry.socialMediaLink)
+                    span.screen-reader-text Facebook
+              if entry.socialMediaName == 'Instagram'
+                li.menu-item.menu-item-type-custom
+                  a(title='Instagram' target='_blank' href=entry.socialMediaLink)
+                    span.screen-reader-text Instagram
+              if entry.socialMediaName == 'Twitter'
+                li.menu-item.menu-item-type-custom
+                  a(title='Twitter Profile' target='_blank' href=entry.socialMediaLink)
+                    span.screen-reader-text Twitter
+              if entry.socialMediaName == 'Youtube'
+                li.menu-item.menu-item-type-custom
+                  a(title='YouTube Channel' target='_blank' href=entry.socialMediaLink)
+                    span.screen-reader-text YouTube
+              if entry.socialMediaName == 'TikTok'
+                li.menu-item.menu-item-type-custom
+                  a(title='Tik Tok' target='_blank' href=entry.socialMediaLink)
+                    span.screen-reader-text TikTok
       .call-to-action.col-12.col-sm-auto.order-5.order-sm-2.order-lg-4
         a.button.button-small(href='/construction' target='_blank')
           span.zmdi.zmdi-filter-list

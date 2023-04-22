@@ -15,22 +15,29 @@ footer#footer.padding-top-bottom(style='background-color: #262626; color:#fff;')
                   input.button-color.button-filled(value='Subscribe' type='submit')
         section.widget.widget_nav
           h3.screen-reader-text Social Navigation
-          nav
+          nav#social-links-menu.col-12.col-md-auto.order-4.order-md-1.order-lg-3(style='color:black')
             ul.social-navigation
-              li.menu-item.menu-item-type-custom
-                a(title='Facebook Profile' target='_blank' href='http://facebook.com')
-                  span.screen-reader-text Facebook
-              li.menu-item.menu-item-type-custom
-                a(title='Google Play' target='_blank' href='http://play.google.com')
-                  span.screen-reader-text Google Play
-              li.menu-item.menu-item-type-custom
-                a(title='Twitter Profile' target='_blank' href='http://twitter.com')
-                  span.screen-reader-text Twitter
-              li.menu-item.menu-item-type-custom
-                a(title='SoundCloud' target='_blank' href='http://soundcloud.com/podcast')
-                  span.screen-reader-text SoundCloud
-              li.menu-item.menu-item-type-custom
-                a(title='YouTube Channel' target='_blank' href='http://youtube.com')
-                  span.screen-reader-text YouTube
+              each entry in getMetaData.socialMedia
+                if entry.showSocialMedia
+                  if entry.socialMediaName == 'Facebook'
+                    li.menu-item.menu-item-type-custom
+                      a(title='Facebook Profile' target='_blank' href=entry.socialMediaLink)
+                        span.screen-reader-text Facebook
+                  if entry.socialMediaName == 'Instagram'
+                    li.menu-item.menu-item-type-custom
+                      a(title='Instagram' target='_blank' href=entry.socialMediaLink)
+                        span.screen-reader-text Instagram
+                  if entry.socialMediaName == 'Twitter'
+                    li.menu-item.menu-item-type-custom
+                      a(title='Twitter Profile' target='_blank' href=entry.socialMediaLink)
+                        span.screen-reader-text Twitter
+                  if entry.socialMediaName == 'Youtube'
+                    li.menu-item.menu-item-type-custom
+                      a(title='YouTube Channel' target='_blank' href=entry.socialMediaLink)
+                        span.screen-reader-text YouTube
+                  //- if entry.socialMediaName == 'TikTok'
+                  //-   li.menu-item.menu-item-type-custom
+                  //-     a(title='Tik Tok' target='_blank' href=entry.socialMediaLink)
+                  //-       span.screen-reader-text TikTok
       .copyright.col-12
         p &copy; LGND &hearts;. All Rights Reserved.

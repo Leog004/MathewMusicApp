@@ -125,3 +125,23 @@ exports.GetFeaturedVideos = async () => {
   const result = await request(graphqlAPI, query); // get our response from api call
   return result.video; // return data
 };
+
+exports.GetMetaData = async () => {
+  const query = gql`query GetMetaData {
+    metadata(where: {id: "clgrky116zpqz0bim0n2630ei"}) {
+      id
+      photoLink {
+        url
+      }
+      socialMedia {
+        showSocialMedia
+        socialMediaLink
+        socialMediaName
+      }
+    }
+  }`;
+
+  const result = await request(graphqlAPI, query); // get our response from api call
+  return result.metadata; // retur
+  
+};

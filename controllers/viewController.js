@@ -4,7 +4,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
 const Subscriber = require('../models/subscriber');
-const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout, GetFeaturedVideos } = require('../utils/graphql');
+const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout, GetFeaturedVideos, GetMetaData } = require('../utils/graphql');
 
 
 
@@ -25,52 +25,65 @@ exports.getHomePage = catchAsync ( async (req, res) => {
     const music = await GetAllMusic();
     const featuredSong = await GetFeaturedSong();
     const featuredVideo = await GetFeaturedVideos();
+    const getMetaData = await GetMetaData();
 
     res.status(200).render('mathew/home', {
         Title: 'Mathew Maciel - Home Page',
         music,
         featuredSong,
-        featuredVideo
+        featuredVideo,
+        getMetaData
     });
 });
 
-exports.getContactPage = (req, res) => {
+exports.getContactPage = async (req, res) => {
+    const getMetaData = await GetMetaData();
     res.status(200).render('mathew/contact',{
-        Title: 'Mathew Maciel - Contact Page'
+        Title: 'Mathew Maciel - Contact Page',
+        getMetaData,
     });
 }
 
 exports.getMusicPage = catchAsync ( async (req, res) => {
     const music = await GetAllMusic();
+    const getMetaData = await GetMetaData();
+
     res.status(200).render('mathew/music',{
         Title: 'Mathew Maciel - Music Page',
-        music
+        music,
+        getMetaData
     });  
 });
 
 exports.getVideoPage = catchAsync ( async (req, res) => {
     
     const videos = await GetAllVideos();
+    const getMetaData = await GetMetaData();
 
     res.status(200).render('mathew/videos',{
         Title: 'Mathew Maciel - Video Page',
-        videos
+        videos,
+        getMetaData
     });
 });
 
 exports.getBioPage = catchAsync ( async (req, res) => {
     const bio = await GetBio();
+    const getMetaData = await GetMetaData();
     res.status(200).render('mathew/bio',{
         Title: 'Mathew Maciel - Bio Page',
-        bio
+        bio,
+        getMetaData
     });
 });
 
 exports.getAboutPage = catchAsync ( async (req, res) => {
     const about = await GetAbout();
+    const getMetaData = await GetMetaData();
     res.status(200).render('mathew/about',{
         Title: 'Mathew Maciel - About Page',
-        about
+        about,
+        getMetaData
     });
 });
 
