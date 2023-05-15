@@ -17,6 +17,40 @@ block append head
     .latest-news {
         background-image: url(tmp/latest-news.jpg);
     }
+    .popup {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 2px;
+      border-radius: 5px;
+      width: 780px;
+      max-width: 100%;
+      text-align: center;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+    }
     @media (max-width: 768px) {
         .remove{
             display:none;
@@ -31,6 +65,11 @@ block append head
     }
 
 block content
+ .popup
+  .popup-content
+    a(href='https://yougodsmusic.org/music-video/provider-by-mathew-maciel/' target='_blank')
+     img#popup-image(src='/img/OMF 1920-1080.png' alt='Popup Image')
+    span.close &times;
  header#featured.featured-content.fade-background-0.padding-top-bottom
   .container
     .row.align-items-center
@@ -156,3 +195,14 @@ block append javascript
     script(src='/mediaelement/wp-mediaelement.js')
     script(src='/js/mediaelement-castilo.js')
     script(src='/js/bundle.js')
+    script(type='text/javascript').
+      // Get the modal
+      var popup = document.querySelector('.popup');
+      // Get the close button
+      var closeBtn = document.querySelector('.close');
+      // When the user clicks on the close button, hide the modal
+      closeBtn.addEventListener('click', function() {
+      popup.style.display = 'none';
+      });
+      // Show the modal
+      popup.style.display = 'block';
