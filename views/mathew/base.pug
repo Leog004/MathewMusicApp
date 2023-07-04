@@ -5,13 +5,20 @@ html
         meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
         meta(name='description' content='Mathew Music')
         meta(name='keywords' content='Music')
+        
         title #{Title}
         <link href="https://fonts.googleapis.com/css?family=Oswald:300,400%7CKarla:400,700" rel="stylesheet">
-        link(rel='shortcut icon' href='favicon.png')
+
+        link(rel='shortcut icon' href='/favicon/favicon.ico')
+        link(rel='apple-touch-icon' sizes='180x180' href='/favicon/apple-touch-icon.png')
+        link(rel='icon' type='image/png' sizes='32x32' href='/favicon/favicon-32x32.png')
+        link(rel='icon' type='image/png' sizes='16x16' href='/favicon/favicon-16x16.png')
+
         link(rel='stylesheet' href='/css/bootstrap-reboot.css')
         link(rel='stylesheet' href='/css/bootstrap-grid.css')
         link(rel='stylesheet' href='/css/material-design-iconic-font.css')
         link(rel='stylesheet' href='/css/style.css')
+
         meta(property='og:title' content='Mathew Music')
         meta(property='og:image' content=getMetaData.photoLink.url)
         block head
