@@ -51,7 +51,7 @@ exports.getHomePage = catchAsync ( async (req, res) => {
 exports.getContactPage = async (req, res) => {
     const getContactBanner = await GetBanners();
     const getMetaData = await GetMetaData();
-    const contactBannerImage = (getContactBanner?.contactBanner?.url) || '/img/header/7.png';
+    const contactBannerImage = (getContactBanner && getContactBanner.contactBanner && getContactBanner.contactBanner.url) || '/img/header/7.png';
 
     res.status(200).render('mathew/contact',{
         Title: 'Mathew Maciel - Contact Page',
@@ -64,7 +64,7 @@ exports.getMusicPage = catchAsync ( async (req, res) => {
     const music = await GetAllMusic();
     const getMetaData = await GetMetaData();
     const getMusicBanner = await GetBanners();
-    const musicBannerImage = (getMusicBanner?.musicBanner?.url) || '/img/header/5.png';
+    const musicBannerImage = (getMusicBanner && getMusicBanner.musicBanner && getMusicBanner.musicBanner.url) || '/img/header/5.png';
 
 
     res.status(200).render('mathew/music',{
@@ -80,7 +80,7 @@ exports.getVideoPage = catchAsync ( async (req, res) => {
     const videos = await GetAllVideos();
     const getMetaData = await GetMetaData();
     const getVideoBanner = await GetBanners();
-    const videoBannerImage = (getVideoBanner?.videoBanner?.url) || '/img/header/6.png';
+    const videoBannerImage = (getVideoBanner && getVideoBanner.videoBanner && getVideoBanner.videoBanner.url) || '/img/header/6.png';
 
     res.status(200).render('mathew/videos',{
         Title: 'Mathew Maciel - Video Page',
@@ -94,7 +94,7 @@ exports.getBioPage = catchAsync ( async (req, res) => {
     const bio = await GetBio();
     const getMetaData = await GetMetaData();
     const getBioBanner = await GetBanners();
-    const bioBannerImage = (getBioBanner?.bioBanner?.url) || '/img/header/4.png';
+    const bioBannerImage = (getBioBanner && getBioBanner.bioBanner && getBioBanner.bioBanner.url) || '/img/header/4.png';
 
     res.status(200).render('mathew/bio',{
         Title: 'Mathew Maciel - Bio Page',
@@ -108,7 +108,7 @@ exports.getAboutPage = catchAsync ( async (req, res) => {
     const about = await GetAbout();
     const getMetaData = await GetMetaData();
     const getAboutBanner = await GetBanners();
-    const aboutBannerImage = (getAboutBanner?.aboutBanner?.url) || '/img/header/2.png';
+    const aboutBannerImage = (getAboutBanner && getAboutBanner.aboutBanner && getAboutBanner.aboutBanner.url) || '/img/header/2.png';
 
     res.status(200).render('mathew/about',{
         Title: 'Mathew Maciel - About Page',
