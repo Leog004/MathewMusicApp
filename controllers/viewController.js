@@ -28,7 +28,7 @@ exports.getHomePage = catchAsync ( async (req, res) => {
     const getMetaData = await GetMetaData();
     const getHomeBanner = await GetBanners();
 
-    const homeBannerImage = (getHomeBanner?.homeBanner?.url) || '/img/header/1.png';
+    const homeBannerImage = (getHomeBanner && getHomeBanner.homeBanner && getHomeBanner.homeBanner.url) || '/img/header/1.png';
 
     let featuredSongPlay = 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE';
 
