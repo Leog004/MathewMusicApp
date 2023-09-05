@@ -29,11 +29,19 @@ exports.getHomePage = catchAsync ( async (req, res) => {
     const getHomeBanner = await GetBanners();
 
     const homeBannerImage = getHomeBanner?.homeBanner.url || '/img/header/1.png';
+
+    let featuredSongPlay = 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE';
+
+    if(featuredSong.length > 0) {
+        featuredSongPlay = featuredSong[0].spotifyUrl;
+        console.log(featuredSongPlay);
+    }
+
     
     res.status(200).render('mathew/home', {
         Title: 'Mathew Maciel - Home Page',
         music,
-        featuredSong,
+        featuredSong: featuredSongPlay,
         featuredVideo,
         getMetaData,
         homeBannerImage: homeBannerImage

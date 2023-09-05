@@ -40,7 +40,7 @@ block content
             p.big.text-uppercase.opacity-50 Featured Music
             h1.entry-title
               a(href='#') 
-            iframe(src='https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE' width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
+            iframe(src=featuredSong.replace('/track', '/embed/track') width='500' height='80' frameborder='0' allowtransparency='true' allow='encrypted-media')
             //- .podcast-episode
             //-   .podcast-episode-player(data-episode-download='/music/TheThrone.mp3' data-episode-download-button='Download Episode (4,567.6 KB)' data-episode-duration='3:02' data-episode-size='4,567.6 KB')
             //-     audio.wp-audio-shortcode(preload='none' style='width: 100%;' controls='controls')
