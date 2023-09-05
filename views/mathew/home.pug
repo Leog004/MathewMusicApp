@@ -4,12 +4,12 @@ block append head
  style#castilo-inline-style.
     .featured-content {
         background-color: #313131;
-        background-image: url('/img/header/1.png');
+        background-image: url(#{homeBannerImage});
     }
     @media (min-width: 768px) {
-    .featured-content {
-        background-image: url('/img/header/1.png');
-    }
+      .featured-content {
+          background-image: url(#{homeBannerImage});
+      }
     }
     .sales-box {
         background-image: url(tmp/sample-sales.jpg);

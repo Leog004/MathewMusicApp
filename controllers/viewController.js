@@ -4,7 +4,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Email = require('../utils/email');
 const Subscriber = require('../models/subscriber');
-const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout, GetFeaturedVideos, GetMetaData } = require('../utils/graphql');
+const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout, GetFeaturedVideos, GetMetaData, GetBanners } = require('../utils/graphql');
 
 
 
@@ -26,32 +26,44 @@ exports.getHomePage = catchAsync ( async (req, res) => {
     const featuredSong = await GetFeaturedSong();
     const featuredVideo = await GetFeaturedVideos();
     const getMetaData = await GetMetaData();
+    const getHomeBanner = await GetBanners();
 
+    const homeBannerImage = getHomeBanner?.homeBanner.url || '/img/header/1.png';
+    
     res.status(200).render('mathew/home', {
         Title: 'Mathew Maciel - Home Page',
         music,
         featuredSong,
         featuredVideo,
-        getMetaData
+        getMetaData,
+        homeBannerImage: homeBannerImage
     });
 });
 
 exports.getContactPage = async (req, res) => {
+    const getContactBanner = await GetBanners();
     const getMetaData = await GetMetaData();
+    const contactBannerImage = getContactBanner?.contactBanner.url || '/img/header/7.png';
+
     res.status(200).render('mathew/contact',{
         Title: 'Mathew Maciel - Contact Page',
         getMetaData,
+        contactBannerImage: contactBannerImage
     });
 }
 
 exports.getMusicPage = catchAsync ( async (req, res) => {
     const music = await GetAllMusic();
     const getMetaData = await GetMetaData();
+    const getMusicBanner = await GetBanners();
+    const musicBannerImage = getMusicBanner?.musicBanner.url || '/img/header/5.png';
+
 
     res.status(200).render('mathew/music',{
         Title: 'Mathew Maciel - Music Page',
         music,
-        getMetaData
+        getMetaData,
+        musicBannerImage: musicBannerImage,
     });  
 });
 
@@ -59,31 +71,42 @@ exports.getVideoPage = catchAsync ( async (req, res) => {
     
     const videos = await GetAllVideos();
     const getMetaData = await GetMetaData();
+    const getVideoBanner = await GetBanners();
+    const videoBannerImage = getVideoBanner?.videoBanner.url || '/img/header/6.png';
 
     res.status(200).render('mathew/videos',{
         Title: 'Mathew Maciel - Video Page',
         videos,
-        getMetaData
+        getMetaData,
+        videoBannerImage: videoBannerImage
     });
 });
 
 exports.getBioPage = catchAsync ( async (req, res) => {
     const bio = await GetBio();
     const getMetaData = await GetMetaData();
+    const getBioBanner = await GetBanners();
+    const bioBannerImage = getBioBanner?.bioBanner.url || '/img/header/4.png';
+
     res.status(200).render('mathew/bio',{
         Title: 'Mathew Maciel - Bio Page',
         bio,
-        getMetaData
+        getMetaData,
+        bioBannerImage: bioBannerImage
     });
 });
 
 exports.getAboutPage = catchAsync ( async (req, res) => {
     const about = await GetAbout();
     const getMetaData = await GetMetaData();
+    const getAboutBanner = await GetBanners();
+    const aboutBannerImage = getAboutBanner?.aboutBanner.url || '/img/header/2.png';
+
     res.status(200).render('mathew/about',{
         Title: 'Mathew Maciel - About Page',
         about,
-        getMetaData
+        getMetaData,
+        aboutBannerImage: aboutBannerImage
     });
 });
 

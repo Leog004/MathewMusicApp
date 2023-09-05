@@ -145,3 +145,32 @@ exports.GetMetaData = async () => {
   return result.metadata; // retur
   
 };
+
+exports.GetBanners = async () => {
+  const query = gql`query BannerImages {
+    bannerImages(where: {id: "clm6nh5oqjlqs0bhdaeq40jzx"}) {
+      homeBanner {
+        url
+      }
+      aboutBanner {
+        url
+      }
+      bioBanner {
+        url
+      }
+      musicBanner {
+        url
+      }
+      videoBanner {
+        url
+      }
+      contactBanner {
+        url
+      }
+    }
+  }
+  `;
+  
+  const result = await request(graphqlAPI, query); // get our response from api call
+  return result.bannerImages[0];
+};
