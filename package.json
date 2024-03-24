@@ -9,7 +9,10 @@
     "start:prod": "NODE_ENV=production nodemon server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "bundle:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "bundle:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "test": "jest --watchAll --verbose --runInBand --detectOpenHandles --forceExit --coverage",
+    "lint": "eslint",
+    "eslint:fix": "eslint . --ext .js --fix"
   },
   "author": "",
   "license": "ISC",
@@ -43,6 +46,7 @@
     "xss-clean": "^0.1.1"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "ndb": "^1.1.5"
   },
   "engines": {

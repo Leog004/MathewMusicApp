@@ -1,6 +1,6 @@
-const { request, gql } = require("graphql-request");
+const { request, gql } = require('graphql-request')
 
-const graphqlAPI = process.env.GRAPHCMSAPITOKEN;
+const graphqlAPI = process.env.GRAPHCMSAPITOKEN
 
 exports.GetAllMusic = async () => {
   const query = gql`
@@ -20,12 +20,12 @@ exports.GetAllMusic = async () => {
         showOnHomePage
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
+  const result = await request(graphqlAPI, query) // get our response from api call
 
-  return result.musics; // return data
-};
+  return result.musics // return data
+}
 
 exports.GetFeaturedSong = async () => {
   const query = gql`
@@ -44,12 +44,12 @@ exports.GetFeaturedSong = async () => {
         showOnWeb
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
+  const result = await request(graphqlAPI, query) // get our response from api call
 
-  return result.musics; // return data
-};
+  return result.musics // return data
+}
 
 exports.GetAllVideos = async () => {
   const query = gql`
@@ -59,11 +59,11 @@ exports.GetAllVideos = async () => {
         youtubeVideoUrl
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.videos; // return data
-};
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.videos // return data
+}
 
 exports.GetBio = async () => {
   const query = gql`
@@ -82,11 +82,11 @@ exports.GetBio = async () => {
         }
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.bios; // return data
-};
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.bios // return data
+}
 
 exports.GetAbout = async () => {
   const query = gql`
@@ -103,11 +103,11 @@ exports.GetAbout = async () => {
         }
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.abouts; // return data
-};
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.abouts // return data
+}
 
 exports.GetFeaturedVideos = async () => {
   const query = gql`
@@ -120,11 +120,11 @@ exports.GetFeaturedVideos = async () => {
         }
       }
     }
-  `;
+  `
 
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.video; // return data
-};
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.video // return data
+}
 
 exports.GetMetaData = async () => {
   const query = gql`query GetMetaData {
@@ -139,12 +139,11 @@ exports.GetMetaData = async () => {
         socialMediaName
       }
     }
-  }`;
+  }`
 
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.metadata; // retur
-  
-};
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.metadata // retur
+}
 
 exports.GetBanners = async () => {
   const query = gql`query BannerImages {
@@ -169,8 +168,8 @@ exports.GetBanners = async () => {
       }
     }
   }
-  `;
-  
-  const result = await request(graphqlAPI, query); // get our response from api call
-  return result.bannerImages[0];
-};
+  `
+
+  const result = await request(graphqlAPI, query) // get our response from api call
+  return result.bannerImages[0]
+}

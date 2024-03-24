@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 
 
 app.use (function (req, res, next) {
-    if (req.secure) {
+    if (req.secure || process.env.NODE_ENV === 'development') {
             // request was via https, so do no special handling
             next();
     } else {
@@ -77,33 +77,6 @@ app.use (function (req, res, next) {
             res.redirect('https://' + req.headers.host + req.url);
     }
 });
-
-
-
-// app.get('/contact', (req, res) => {
-//     res.status(200).render('contact');
-// });
-
-// app.get('/about', (req, res) => {
-//     res.status(200).render('about');
-// });
-
-// app.get('/bio', (req, res) => {
-//     res.status(200).render('bio');
-// });
-
-// app.get('/music', (req, res) => {
-//     res.status(200).render('music');
-// });
-
-// app.get('/construction', (req, res) => {
-//     res.status(200).render('construction');
-// });
-
-// app.get('/videos', (req, res) => {
-//     res.status(200).render('videos');
-// });
-
 
 // ROUTES
 app.use('/admin', adminRouter);
@@ -114,12 +87,14 @@ app.use('', viewRouter); // get view Routes
 
 // global route
 app.all('*', (req, res, next) => {
-    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+    // redirect to home page
+    if(process.env.NODE_ENV === 'development'){
+        return next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+    } else {
+        res.redirect('/');
+    }
 })
 
 app.use(globalErrorHandler); // displays global error
-
-
-
 
 module.exports = app;

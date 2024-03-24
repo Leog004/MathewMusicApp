@@ -1,215 +1,312 @@
-const express = require('express');
-const APIFeatures = require('./../utils/apiFeatures');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('../utils/appError');
-const Email = require('../utils/email');
-const Subscriber = require('../models/subscriber');
-const { GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout, GetFeaturedVideos, GetMetaData, GetBanners } = require('../utils/graphql');
+/**
+ * @fileoverview This file contains the controller functions responsible for handling requests
+ * and rendering views for different pages. It utilizes utility functions for asynchronous
+ * error handling, fetching data from GraphQL services, sending emails, and more.
+ */
 
+const catchAsync = require('./../utils/catchAsync')
+const AppError = require('../utils/appError')
+const Email = require('../utils/email')
+const Subscriber = require('../models/subscriber')
+const {
+  GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout,
+  GetFeaturedVideos, GetMetaData, GetBanners
+} = require('../utils/graphql')
 
-
-exports.checkBodyForEmail = (req, res, next) =>  {
-
-    if(!req.body.email){
-        return res.status(404).json({
-            status: 'fail',
-            message: 'Can not find parameter name'
-        });
-    }
-
-    next();
+/**
+ * Fetches page data concurrently using provided GraphQL query functions.
+ * @param {Function[]} queryFunctions - Array of functions that return promises.
+ * @returns {Promise<Array>} Promise that resolves to an array of query results.
+ */
+async function fetchPageData (queryFunctions) {
+  return await Promise.all(queryFunctions.map(func => func()))
 }
 
+/**
+ * Middleware to validate email in the request body.
+ * Throws an AppError if the email is missing or invalid.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {Function} next - The next middleware function in the stack.
+ */
+exports.checkBodyForEmail = catchAsync(async (req, res, next) => {
+  const { email } = req.body
+  if (!email) {
+    return next(new AppError('Cannot find email parameter', 404))
+  }
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    return next(new AppError('Email is not valid', 404))
+  }
+  next()
+})
 
-exports.getHomePage = catchAsync ( async (req, res) => {
-    const music = await GetAllMusic();
-    const featuredSong = await GetFeaturedSong();
-    const featuredVideo = await GetFeaturedVideos();
-    const getMetaData = await GetMetaData();
-    const getHomeBanner = await GetBanners();
+/**
+ * Controller function to render the home page.
+ * Fetches necessary data and renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.getHomePage = catchAsync(async (req, res) => {
+  const [music, featuredSong, featuredVideo, getMetaData, getHomeBanner] = await fetchPageData([
+    GetAllMusic,
+    GetFeaturedSong,
+    GetFeaturedVideos,
+    GetMetaData,
+    GetBanners
+  ])
 
-    const homeBannerImage = (getHomeBanner && getHomeBanner.homeBanner && getHomeBanner.homeBanner.url) || '/img/header/1.png';
+  const homeBannerImage = getHomeBanner?.homeBanner?.url || '/img/header/1.png'
+  const featuredSongPlay = featuredSong.length > 0 ? featuredSong[0].spotifyUrl : 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE'
 
-    let featuredSongPlay = 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE';
+  console.log('getMetaData', getMetaData);
+  res.status(200).render('mathew/home', {
+    Title: 'Mathew Maciel - Home Page',
+    music,
+    featuredSong: featuredSongPlay,
+    featuredVideo,
+    getMetaData,
+    homeBannerImage
+  })
+})
 
-    if(featuredSong.length > 0) {
-        featuredSongPlay = featuredSong[0].spotifyUrl;
-        console.log(featuredSongPlay);
-    }
-
-    
-    res.status(200).render('mathew/home', {
-        Title: 'Mathew Maciel - Home Page',
-        music,
-        featuredSong: featuredSongPlay,
-        featuredVideo,
-        getMetaData,
-        homeBannerImage: homeBannerImage
-    });
-});
-
+/**
+ * Controller function to render the contact page.
+ * Fetches meta data and banner information then renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 exports.getContactPage = async (req, res) => {
-    const getContactBanner = await GetBanners();
-    const getMetaData = await GetMetaData();
-    const contactBannerImage = (getContactBanner && getContactBanner.contactBanner && getContactBanner.contactBanner.url) || '/img/header/7.png';
+  const [getMetaData, getContactBanner] = await fetchPageData([GetMetaData, GetBanners])
+  const contactBannerImage = getContactBanner?.contactBanner?.url || '/img/header/7.png'
 
-    res.status(200).render('mathew/contact',{
-        Title: 'Mathew Maciel - Contact Page',
-        getMetaData,
-        contactBannerImage: contactBannerImage
-    });
+  res.status(200).render('mathew/contact', {
+    Title: 'Mathew Maciel - Contact Page',
+    getMetaData,
+    contactBannerImage
+  })
 }
 
-exports.getMusicPage = catchAsync ( async (req, res) => {
-    const music = await GetAllMusic();
-    const getMetaData = await GetMetaData();
-    const getMusicBanner = await GetBanners();
-    const musicBannerImage = (getMusicBanner && getMusicBanner.musicBanner && getMusicBanner.musicBanner.url) || '/img/header/5.png';
+/**
+ * Controller function to render the music page.
+ * Fetches music data, meta data, and banner information then renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.getMusicPage = catchAsync(async (req, res) => {
+  const [music, getMetaData, getMusicBanner] = await fetchPageData([GetAllMusic, GetMetaData, GetBanners])
+  const musicBannerImage = getMusicBanner?.musicBanner?.url || '/img/header/5.png'
 
+  res.status(200).render('mathew/music', {
+    Title: 'Mathew Maciel - Music Page',
+    music,
+    getMetaData,
+    musicBannerImage
+  })
+})
 
-    res.status(200).render('mathew/music',{
-        Title: 'Mathew Maciel - Music Page',
-        music,
-        getMetaData,
-        musicBannerImage: musicBannerImage,
-    });  
-});
+/**
+ * Controller function to render the videos page.
+ * Fetches video data, meta data, and banner information then renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.getVideoPage = catchAsync(async (req, res) => {
+  const [videos, getMetaData, getVideoBanner] = await fetchPageData([GetAllVideos, GetMetaData, GetBanners])
+  const videoBannerImage = getVideoBanner?.videoBanner?.url || '/img/header/6.png'
 
-exports.getVideoPage = catchAsync ( async (req, res) => {
-    
-    const videos = await GetAllVideos();
-    const getMetaData = await GetMetaData();
-    const getVideoBanner = await GetBanners();
-    const videoBannerImage = (getVideoBanner && getVideoBanner.videoBanner && getVideoBanner.videoBanner.url) || '/img/header/6.png';
+  res.status(200).render('mathew/videos', {
+    Title: 'Mathew Maciel - Video Page',
+    videos,
+    getMetaData,
+    videoBannerImage
+  })
+})
 
-    res.status(200).render('mathew/videos',{
-        Title: 'Mathew Maciel - Video Page',
-        videos,
-        getMetaData,
-        videoBannerImage: videoBannerImage
-    });
-});
+/**
+ * Controller function to render the biography page.
+ * Fetches biography data, meta data, and banner information then renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.getBioPage = catchAsync(async (req, res) => {
+  const [bio, getMetaData, getBioBanner] = await fetchPageData([GetBio, GetMetaData, GetBanners])
+  const bioBannerImage = getBioBanner?.bioBanner?.url || '/img/header/4.png'
 
-exports.getBioPage = catchAsync ( async (req, res) => {
-    const bio = await GetBio();
-    const getMetaData = await GetMetaData();
-    const getBioBanner = await GetBanners();
-    const bioBannerImage = (getBioBanner && getBioBanner.bioBanner && getBioBanner.bioBanner.url) || '/img/header/4.png';
+  res.status(200).render('mathew/bio', {
+    Title: 'Mathew Maciel - Bio Page',
+    bio,
+    getMetaData,
+    bioBannerImage
+  })
+})
 
-    res.status(200).render('mathew/bio',{
-        Title: 'Mathew Maciel - Bio Page',
-        bio,
-        getMetaData,
-        bioBannerImage: bioBannerImage
-    });
-});
+/**
+ * Controller function to render the about page.
+ * Fetches about data, meta data, and banner information then renders the page with dynamic content.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
+exports.getAboutPage = catchAsync(async (req, res) => {
+  const [about, getMetaData, getAboutBanner] = await fetchPageData([GetAbout, GetMetaData, GetBanners])
+  const aboutBannerImage = getAboutBanner?.aboutBanner?.url || '/img/header/2.png'
 
-exports.getAboutPage = catchAsync ( async (req, res) => {
-    const about = await GetAbout();
-    const getMetaData = await GetMetaData();
-    const getAboutBanner = await GetBanners();
-    const aboutBannerImage = (getAboutBanner && getAboutBanner.aboutBanner && getAboutBanner.aboutBanner.url) || '/img/header/2.png';
+  res.status(200).render('mathew/about', {
+    Title: 'Mathew Maciel - About Page',
+    about,
+    getMetaData,
+    aboutBannerImage
+  })
+})
 
-    res.status(200).render('mathew/about',{
-        Title: 'Mathew Maciel - About Page',
-        about,
-        getMetaData,
-        aboutBannerImage: aboutBannerImage
-    });
-});
-
-
+/**
+ * Controller function to render the construction page.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 exports.getConstructionPage = (req, res) => {
-    res.status(200).render('mathew/construction',{
-        Title: 'Mathew Maciel - Construction Page'
-    });  
+  const getMetaData = {
+    id: 'clgrky116zpqz0bim0n2630ei',
+    photoLink: { url: 'https://media.graphassets.com/TJHWac7S968pdz5X9QRL' },
+    socialMedia: [
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.facebook.com/mathewmacielmusic',
+        socialMediaName: 'Facebook'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.instagram.com/mathew_maciel/',
+        socialMediaName: 'Instagram'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://twitter.com/mathew_maciel',
+        socialMediaName: 'Twitter'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.youtube.com/mathewmacielmusic',
+        socialMediaName: 'Youtube'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.tiktok.com/@mathewmacielmusic?_t=8aTqoqEdyN4&_r=1',
+        socialMediaName: 'TikTok'
+      }
+    ]
+  }
+
+  res.status(200).render('mathew/construction', {
+    Title: 'Mathew Maciel - Construction Page',
+    getMetaData,
+  })
 }
 
-
+/**
+ * Controller function to render the login page.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 exports.login = (req, res) => {
-    res.status(200).render('login',{
-        Title: 'Mathew Maciel- Login Page'
-    });  
+  const getMetaData = {
+    id: 'clgrky116zpqz0bim0n2630ei',
+    photoLink: { url: 'https://media.graphassets.com/TJHWac7S968pdz5X9QRL' },
+    socialMedia: [
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.facebook.com/mathewmacielmusic',
+        socialMediaName: 'Facebook'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.instagram.com/mathew_maciel/',
+        socialMediaName: 'Instagram'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://twitter.com/mathew_maciel',
+        socialMediaName: 'Twitter'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.youtube.com/mathewmacielmusic',
+        socialMediaName: 'Youtube'
+      },
+      {
+        showSocialMedia: true,
+        socialMediaLink: 'https://www.tiktok.com/@mathewmacielmusic?_t=8aTqoqEdyN4&_r=1',
+        socialMediaName: 'TikTok'
+      }
+    ]
+  }
+
+  res.status(200).render('login', {
+    Title: 'Mathew Maciel- Login Page',
+    getMetaData
+  })
 }
 
+/**
+ * Handles the submission of the contact form by sending an email to both the user and the host.
+ * Utilizes the `Email` class for sending emails, where emails are sent based on the request's body content.
+ *
+ * @param {Object} req - The request object containing the contact form's data.
+ * @param {Object} res - The response object used to send a reply back to the client.
+ * @param {Function} next - The next middleware function in the Express middleware chain.
+ *
+ * @property {string} req.body.name - The name of the person submitting the form.
+ * @property {string} req.body.email - The email address of the person submitting the form.
+ * @property {string} req.body.message - The message provided by the person in the contact form.
+ */
+exports.postContact = catchAsync(async (req, res, next) => {
+  const { name, email, message } = req.body
+  if (!email || !message) {
+    return next(new AppError('Please provide email and message!', 400))
+  }
+  const url = `${req.protocol}://${req.get('host')}/`
+  await new Email({ name, email, message }, url).sendWelcome()
+  await new Email({ name, email: 'mathewmacielmusic@gmail.com', message }, url).sendToHost()
 
-exports.postContact = catchAsync( async (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Email sent!' })
+})
 
-    const {name, email, message} = req.body;
+/**
+ * Handles the submission of the subscriber form by saving the email to the database.
+ * @param { object } req - The request object containing the subscriber's email.
+ * @param { object } res - The response object used to send a reply back to the client.
+ * @param { function } next - The next middleware function in the Express middleware chain.
+ *
+ * @property { string } req.body.email - The email address of the subscriber.
+ */
+exports.postSubscriber = catchAsync(async (req, res, next) => {
+  const { email } = req.body
+  if (!email) {
+    return next(new AppError('Please provide an email!', 400))
+  }
+  const newSubscriber = await Subscriber.create({ email })
 
-    // Check if email exists
-    if(!email || !message){
-        return next(new AppError('Please provide email and message!', 400));
-    }
+  res.status(200).json({
+    status: 'success',
+    message: 'Subscription successful!',
+    data: { subscriber: newSubscriber }
+  })
+})
 
-    const newContact = await {
-        name: req.body.name,
-        email: req.body.email,
-        message: req.body.message       
-    };
+/**
+ * Handles the retrieval of all subscribers from the database.
+ * @param { object } req - The request object.
+ * @param { object } res - The response object used to send a reply back to the client.
+ * @param { function } next - The next middleware function in the Express middleware chain.
+ */
+exports.getSubscriber = catchAsync(async (req, res, next) => {
+  const subscribers = await Subscriber.find()
+  if (!subscribers) {
+    return next(new AppError('No subscribers found', 404))
+  }
 
-    const toHost = await {
-        name: req.body.name,
-        email: 'mathewmacielmusic@gmail.com',
-        userEmail: req.body.email,
-        message: req.body.message       
-    };
-
-      const url = `${req.protocol}://${req.get('host')}/`;
-      await new Email(newContact, url).sendWelcome();
-      await new Email(toHost, url).sendToHost();
-
-      res.status(200).json({
-        status: 'success',
-        message: 'email sent!'
-      });
-
-});
-
-
-exports.postSubscriber = catchAsync( async(req, res) => {
-
-    const email = req.body.email;
-    console.log(req.body);
-
-    // Check if email exists
-    if(!email){
-        return next(new AppError('Please provide email and message!', 400));
-    }
-
-    const newSubscriber = await Subscriber.create(req.body);
-
-    // const toHost_ = await {
-    //     email: 'mathewmacielmusic@gmail.com',
-    //     userEmail: req.body.email
-    // };
-
-    // const url = `${req.protocol}://${req.get('host')}/`;
-    // await new Email(toHost_, url).sendToHostSubscriber();
-
-    res.status(200).json({
-        status: 'success',
-        message: 'email sent!',
-        data:{ 
-            subscriber: newSubscriber
-        }
-      });
-
-});
-
-
-exports.getSubscriber = catchAsync(async(req, res) => {
-
-    const subscribers = await Subscriber.find();
-
-    if(!subscribers){
-        return next(new AppError('Can not find any subscribers', 404));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        results : subscribers.length,
-        data: subscribers
-    })
-
-});
+  res.status(200).json({
+    status: 'success',
+    results: subscribers.length,
+    data: { subscribers }
+  })
+})
