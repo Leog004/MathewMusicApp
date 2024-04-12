@@ -18,12 +18,15 @@ module.exports = class Email {
 
   newTransport() {
     if(process.env.NODE_ENV === 'production') {
-      // Sendgrid
-      return nodemailer.createTransport(
-        nodemailerSendgrid({
-          apiKey: process.env.SENDGRID_PASSWORD
-        })
-      )
+      return nodemailer.createTransport({
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true, // use SSL
+          auth: {
+              user: process.env.GMTRANSPORTUSERNAME,
+              pass: process.env.GMTRANSEPORTPASSWORD
+          }
+      });
     }
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
