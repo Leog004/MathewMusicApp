@@ -17,6 +17,40 @@ block append head
     .latest-news {
         background-image: url(tmp/latest-news.jpg);
     }
+    .popup {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    .popup-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 2px;
+      border-radius: 5px;
+      width: 780px;
+      max-width: 100%;
+      text-align: center;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 30px;
+      font-weight: bold;
+      color: #fff;
+      cursor: pointer;
+    }
     @media (max-width: 768px) {
         .remove{
             display:none;
@@ -31,6 +65,12 @@ block append head
     }
 
 block content
+ if showBanner
+  .popup
+    .popup-content
+      a(href=getMetaData.popUpBanner.url target='_blank')
+        img#popup-image(src=getMetaData.popUpBanner.bannerImage.url alt='Popup Image')
+      span.close &times;
  header#featured.featured-content.fade-background-0.padding-top-bottom
   .container
     .row.align-items-center
@@ -132,20 +172,7 @@ block content
             a.button(href='https://www.instagram.com/mathew_maciel/?hl=en')
               span.zmdi.zmdi-instagram
               |  Follow
-//-  footer.sales-box.padding-top-bottom(style='background-image: url(https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1520&q=100&h=368)')
-//-   .container
-//-     .row.align-items-center
-//-       .col-12.col-md-6
-//-         a.cover-image(href='#')
-//-         //-   img(src='tmp/sample-sales-cover.jpg' width='590' height='590' alt='')
-//-       .col-12.col-md-6
-//-         h3 New Stuff Each Week!
-//-         p
-//-           | Listen below and order your copy from Amazon, iTunes or your favorite record store. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia conseqa untur magni dolores eos qui ratione sequi.
-//-         p
-//-           a.button.button-small.button-white(href='#') Amazon
-//-           a.button.button-small.button-white(href='#') iTunes
-//-           a.button.button-small.button-white(href='#') Spotify
+
 
 block append javascript
     link#mediaelement-css(rel='stylesheet' href='/mediaelement/mediaelementplayer-legacy.css')
@@ -156,3 +183,14 @@ block append javascript
     script(src='/mediaelement/wp-mediaelement.js')
     script(src='/js/mediaelement-castilo.js')
     script(src='/js/bundle.js')
+    script(type='text/javascript').
+      // Get the modal
+      var popup = document.querySelector('.popup');
+      // Get the close button
+      var closeBtn = document.querySelector('.close');
+      // When the user clicks on the close button, hide the modal
+      closeBtn.addEventListener('click', function() {
+      popup.style.display = 'none';
+      });
+      // Show the modal
+      popup.style.display = 'block';

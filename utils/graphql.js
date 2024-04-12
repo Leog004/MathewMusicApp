@@ -138,6 +138,14 @@ exports.GetMetaData = async () => {
         socialMediaLink
         socialMediaName
       }
+      popUpBanner {
+        url,
+        showBanner,
+        bannerImage{
+          url
+        }
+      }
+
     }
   }`
 

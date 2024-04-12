@@ -58,14 +58,21 @@ exports.getHomePage = catchAsync(async (req, res) => {
 
   const homeBannerImage = getHomeBanner?.homeBanner?.url || '/img/header/1.png'
   const featuredSongPlay = featuredSong.length > 0 ? featuredSong[0].spotifyUrl : 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE'
+  let showBanner = true
 
+  if (!getMetaData?.popUpBanner?.showBanner || !getMetaData?.popUpBanner?.url || getMetaData?.popUpBanner?.bannerImage.url === '') {
+    showBanner = false
+  }
+
+  
   res.status(200).render('mathew/home', {
     Title: 'Mathew Maciel - Home Page',
     music,
     featuredSong: featuredSongPlay,
     featuredVideo,
     getMetaData,
-    homeBannerImage
+    homeBannerImage,
+    showBanner
   })
 })
 
