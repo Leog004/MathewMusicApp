@@ -267,15 +267,11 @@ exports.login = (req, res) => {
  */
 exports.postContact = catchAsync(async (req, res, next) => {
   const { name, email, message, recaptcha } = req.body
-
-  console.log(recaptcha)
   const secretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY;
   const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptcha}&remoteip=${req.ip}`;
 
   const response = await fetch(verificationURL, { method: 'POST' });
   const data = await response.json();
-
-  console.log(data)
 
   if (!data.success || data.score < 0.7) {
     return next(new AppError('Failed captcha verification', 400))
