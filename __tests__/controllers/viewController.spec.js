@@ -10,8 +10,8 @@ const {
   login,
   postContact,
   postSubscriber,
-  getSubscriber
-} = require('../../controllers/viewController')
+  getSubscriber,
+} = require("../../controllers/viewController");
 const {
   GetAllMusic,
   GetFeaturedSong,
@@ -20,502 +20,555 @@ const {
   GetBanners,
   GetAllVideos,
   GetBio,
-  GetAbout
-} = require('../../utils/graphql')
+  GetAbout,
+} = require("../../utils/graphql");
 
-const Email = require('../../utils/email')
-const Subscriber = require('../../models/subscriber')
+const Email = require("../../utils/email");
+const Subscriber = require("../../models/subscriber");
+const fetch = require('node-fetch');
 
-jest.mock('../../utils/catchAsync', () => jest.fn((fn) => fn))
-jest.mock('../../utils/graphql')
-jest.mock('../../utils/email', () => {
+jest.mock("../../utils/catchAsync", () => jest.fn((fn) => fn));
+jest.mock("../../utils/graphql");
+jest.mock("../../utils/email", () => {
   return jest.fn().mockImplementation(() => {
-    return { sendWelcome: jest.fn(), sendToHost: jest.fn() }
-  })
-})
-jest.mock('../../models/subscriber')
+    return { sendWelcome: jest.fn(), sendToHost: jest.fn() };
+  });
+});
+jest.mock("../../models/subscriber");
+jest.mock('node-fetch');
 
-describe('ViewController', () => {
-  let request, response, next
+
+describe("ViewController", () => {
+  let request, response, next;
 
   beforeEach(() => {
-    request = { body: {} }
+    request = { body: {} };
     response = {
       status: jest.fn(() => response),
       json: jest.fn(),
-      render: jest.fn()
-    }
-    next = jest.fn()
+      render: jest.fn(),
+    };
+    next = jest.fn();
 
     // Default mock implementations
-    GetAllMusic.mockResolvedValue([])
-    GetFeaturedSong.mockResolvedValue([])
-    GetFeaturedVideos.mockResolvedValue([])
-    GetMetaData.mockResolvedValue([])
-    GetBanners.mockResolvedValue({})
-    GetBio.mockResolvedValue([])
-    GetAllVideos.mockResolvedValue([])
-    GetAbout.mockResolvedValue([])
-  })
+    GetAllMusic.mockResolvedValue([]);
+    GetFeaturedSong.mockResolvedValue([]);
+    GetFeaturedVideos.mockResolvedValue([]);
+    GetMetaData.mockResolvedValue([]);
+    GetBanners.mockResolvedValue({});
+    GetBio.mockResolvedValue([]);
+    GetAllVideos.mockResolvedValue([]);
+    GetAbout.mockResolvedValue([]);
+  });
 
   afterEach(() => {
-    jest.clearAllMocks()
-  })
+    jest.clearAllMocks();
+  });
 
-  describe('checkBodyForEmail Middleware', () => {
-    it('returns 404 if no email in body', () => {
-      checkBodyForEmail(request, response, next)
+  describe("checkBodyForEmail Middleware", () => {
+    it("returns 404 if no email in body", () => {
+      checkBodyForEmail(request, response, next);
 
-      const expectedError = new Error('Cannot find email parameter')
+      const expectedError = new Error("Cannot find email parameter");
 
-      expect(next).toHaveBeenCalled()
-      expect(next).toHaveBeenCalledWith(expectedError)
-    })
+      expect(next).toHaveBeenCalled();
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
 
-    it('returns 404 if email is invalid', () => {
-      request.body.email = 'invalidemail'
-      checkBodyForEmail(request, response, next)
+    it("returns 404 if email is invalid", () => {
+      request.body.email = "invalidemail";
+      checkBodyForEmail(request, response, next);
 
-      const expectedError = new Error('Email is not valid')
+      const expectedError = new Error("Email is not valid");
 
-      expect(next).toHaveBeenCalled()
-      expect(next).toHaveBeenCalledWith(expectedError)
-    })
+      expect(next).toHaveBeenCalled();
+      expect(next).toHaveBeenCalledWith(expectedError);
+    });
 
-    it('calls next if email is valid', () => {
-      request.body.email = 'test@test.com'
-      checkBodyForEmail(request, response, next)
+    it("calls next if email is valid", () => {
+      request.body.email = "test@test.com";
+      checkBodyForEmail(request, response, next);
 
-      expect(response.status).not.toHaveBeenCalled()
-      expect(next).toHaveBeenCalled()
-    })
-  })
+      expect(response.status).not.toHaveBeenCalled();
+      expect(next).toHaveBeenCalled();
+    });
+  });
 
-  describe('getHomePage Controller', () => {
-    it('renders home page with default settings', async () => {
-      await getHomePage(request, response)
+  describe("getHomePage Controller", () => {
+    it("renders home page with default settings", async () => {
+      await getHomePage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/home',
+        "mathew/home",
         expect.objectContaining({
-          Title: 'Mathew Maciel - Home Page',
+          Title: "Mathew Maciel - Home Page",
           homeBannerImage: expect.any(String),
           music: [],
           featuredSong:
-            'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE',
+            "https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE",
           featuredVideo: [],
-          getMetaData: []
+          getMetaData: [],
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders home page with a featured song', async () => {
+    it("renders home page with a featured song", async () => {
       GetFeaturedSong.mockResolvedValue([
-        { spotifyUrl: 'https://open.spotify.com/embed/track/featuredSong' }
-      ])
+        { spotifyUrl: "https://open.spotify.com/embed/track/featuredSong" },
+      ]);
 
-      await getHomePage(request, response)
-
-      expect(response.render).toHaveBeenCalledWith(
-        'mathew/home',
-        expect.objectContaining({
-          featuredSong: 'https://open.spotify.com/embed/track/featuredSong'
-        })
-      )
-    })
-
-    it('renders home page with default banner image if no home banner is found', async () => {
-      GetBanners.mockResolvedValue({})
-
-      await getHomePage(request, response)
+      await getHomePage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/home',
+        "mathew/home",
         expect.objectContaining({
-          homeBannerImage: '/img/header/1.png'
+          featuredSong: "https://open.spotify.com/embed/track/featuredSong",
         })
-      )
-    })
+      );
+    });
 
-    it('renders home page with custom banner image if home banner is found', async () => {
+    it("renders home page with default banner image if no home banner is found", async () => {
+      GetBanners.mockResolvedValue({});
+
+      await getHomePage(request, response);
+
+      expect(response.render).toHaveBeenCalledWith(
+        "mathew/home",
+        expect.objectContaining({
+          homeBannerImage: "/img/header/1.png",
+        })
+      );
+    });
+
+    it("renders home page with custom banner image if home banner is found", async () => {
       GetBanners.mockResolvedValue({
-        homeBanner: { url: '/custom/banner/url.png' }
-      })
+        homeBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getHomePage(request, response)
+      await getHomePage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/home',
+        "mathew/home",
         expect.objectContaining({
-          homeBannerImage: '/custom/banner/url.png'
+          homeBannerImage: "/custom/banner/url.png",
         })
-      )
-    })
+      );
+    });
 
-    it('does not render home page if an error occurs', async () => {
-      GetAllMusic.mockRejectedValue(new Error('error'))
+    it("does not render home page if an error occurs", async () => {
+      GetAllMusic.mockRejectedValue(new Error("error"));
 
       await expect(getHomePage(request, response, next)).rejects.toThrow(
-        'error'
-      )
+        "error"
+      );
 
-      expect(response.render).not.toHaveBeenCalled()
-      expect(response.status).not.toHaveBeenCalled()
-    })
-  })
+      expect(response.render).not.toHaveBeenCalled();
+      expect(response.status).not.toHaveBeenCalled();
+    });
+  });
 
-  describe('getContactPage Controller', () => {
-    it('renders contact page with default settings', async () => {
-      await getContactPage(request, response)
-
-      expect(response.render).toHaveBeenCalledWith(
-        'mathew/contact',
-        expect.objectContaining({
-          Title: 'Mathew Maciel - Contact Page',
-          contactBannerImage: '/img/header/7.png',
-          getMetaData: []
-        })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
-
-    it('renders contact page with default banner image if no contact banner is found', async () => {
-      GetBanners.mockResolvedValue({})
-
-      await getContactPage(request, response)
+  describe("getContactPage Controller", () => {
+    it("renders contact page with default settings", async () => {
+      await getContactPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/contact',
+        "mathew/contact",
         expect.objectContaining({
-          contactBannerImage: '/img/header/7.png'
+          Title: "Mathew Maciel - Contact Page",
+          contactBannerImage: "/img/header/7.png",
+          getMetaData: [],
         })
-      )
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders contact page with custom banner image if contact banner is found', async () => {
+    it("renders contact page with default banner image if no contact banner is found", async () => {
+      GetBanners.mockResolvedValue({});
+
+      await getContactPage(request, response);
+
+      expect(response.render).toHaveBeenCalledWith(
+        "mathew/contact",
+        expect.objectContaining({
+          contactBannerImage: "/img/header/7.png",
+        })
+      );
+    });
+
+    it("renders contact page with custom banner image if contact banner is found", async () => {
       GetBanners.mockResolvedValue({
-        contactBanner: { url: '/custom/banner/url.png' }
-      })
+        contactBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getContactPage(request, response)
+      await getContactPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/contact',
+        "mathew/contact",
         expect.objectContaining({
-          contactBannerImage: '/custom/banner/url.png'
+          contactBannerImage: "/custom/banner/url.png",
         })
-      )
-    })
-  })
+      );
+    });
+  });
 
-  describe('getMusicPage Controller', () => {
-    it('renders music page with default settings', async () => {
-      await getMusicPage(request, response)
+  describe("getMusicPage Controller", () => {
+    it("renders music page with default settings", async () => {
+      await getMusicPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/music',
+        "mathew/music",
         expect.objectContaining({
-          Title: 'Mathew Maciel - Music Page',
+          Title: "Mathew Maciel - Music Page",
           music: [],
-          musicBannerImage: '/img/header/5.png',
-          getMetaData: []
+          musicBannerImage: "/img/header/5.png",
+          getMetaData: [],
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders music page with default banner image if no music banner is found', async () => {
-      GetBanners.mockResolvedValue({})
+    it("renders music page with default banner image if no music banner is found", async () => {
+      GetBanners.mockResolvedValue({});
 
-      await getMusicPage(request, response)
+      await getMusicPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/music',
+        "mathew/music",
         expect.objectContaining({
-          musicBannerImage: '/img/header/5.png'
+          musicBannerImage: "/img/header/5.png",
         })
-      )
-    })
+      );
+    });
 
-    it('renders music page with custom banner image if music banner is found', async () => {
+    it("renders music page with custom banner image if music banner is found", async () => {
       GetBanners.mockResolvedValue({
-        musicBanner: { url: '/custom/banner/url.png' }
-      })
+        musicBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getMusicPage(request, response)
+      await getMusicPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/music',
+        "mathew/music",
         expect.objectContaining({
-          musicBannerImage: '/custom/banner/url.png'
+          musicBannerImage: "/custom/banner/url.png",
         })
-      )
-    })
+      );
+    });
 
-    it('does not render music page if an error occurs', async () => {
-      GetAllMusic.mockRejectedValue(new Error('error'))
+    it("does not render music page if an error occurs", async () => {
+      GetAllMusic.mockRejectedValue(new Error("error"));
 
       await expect(getMusicPage(request, response, next)).rejects.toThrow(
-        'error'
-      )
+        "error"
+      );
 
-      expect(response.render).not.toHaveBeenCalled()
-      expect(response.status).not.toHaveBeenCalled()
-    })
-  })
+      expect(response.render).not.toHaveBeenCalled();
+      expect(response.status).not.toHaveBeenCalled();
+    });
+  });
 
-  describe('getVideoPage Controller', () => {
-    it('renders video page with default settings', async () => {
-      await getVideoPage(request, response)
+  describe("getVideoPage Controller", () => {
+    it("renders video page with default settings", async () => {
+      await getVideoPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/videos',
+        "mathew/videos",
         expect.objectContaining({
-          Title: 'Mathew Maciel - Video Page',
+          Title: "Mathew Maciel - Video Page",
           videos: [],
-          videoBannerImage: '/img/header/6.png',
-          getMetaData: []
+          videoBannerImage: "/img/header/6.png",
+          getMetaData: [],
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders video page with default banner image if no video banner is found', async () => {
-      GetBanners.mockResolvedValue({})
+    it("renders video page with default banner image if no video banner is found", async () => {
+      GetBanners.mockResolvedValue({});
 
-      await getVideoPage(request, response)
+      await getVideoPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/videos',
+        "mathew/videos",
         expect.objectContaining({
-          videoBannerImage: '/img/header/6.png'
+          videoBannerImage: "/img/header/6.png",
         })
-      )
-    })
+      );
+    });
 
-    it('renders video page with custom banner image if video banner is found', async () => {
+    it("renders video page with custom banner image if video banner is found", async () => {
       GetBanners.mockResolvedValue({
-        videoBanner: { url: '/custom/banner/url.png' }
-      })
+        videoBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getVideoPage(request, response)
+      await getVideoPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/videos',
+        "mathew/videos",
         expect.objectContaining({
-          videoBannerImage: '/custom/banner/url.png'
+          videoBannerImage: "/custom/banner/url.png",
         })
-      )
-    })
+      );
+    });
 
-    it('does not render video page if an error occurs', async () => {
-      GetAllVideos.mockRejectedValue(new Error('error'))
+    it("does not render video page if an error occurs", async () => {
+      GetAllVideos.mockRejectedValue(new Error("error"));
 
       await expect(getVideoPage(request, response, next)).rejects.toThrow(
-        'error'
-      )
+        "error"
+      );
 
-      expect(response.render).not.toHaveBeenCalled()
-      expect(response.status).not.toHaveBeenCalled()
-    })
-  })
+      expect(response.render).not.toHaveBeenCalled();
+      expect(response.status).not.toHaveBeenCalled();
+    });
+  });
 
-  describe('getBioPage Controller', () => {
-    it('renders bio page with default settings', async () => {
-      await getBioPage(request, response)
+  describe("getBioPage Controller", () => {
+    it("renders bio page with default settings", async () => {
+      await getBioPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/bio',
+        "mathew/bio",
         expect.objectContaining({
-          Title: 'Mathew Maciel - Bio Page',
+          Title: "Mathew Maciel - Bio Page",
           bio: [],
-          bioBannerImage: '/img/header/4.png',
-          getMetaData: []
+          bioBannerImage: "/img/header/4.png",
+          getMetaData: [],
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders bio page with default banner image if no bio banner is found', async () => {
-      GetBanners.mockResolvedValue({})
+    it("renders bio page with default banner image if no bio banner is found", async () => {
+      GetBanners.mockResolvedValue({});
 
-      await getBioPage(request, response)
+      await getBioPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/bio',
+        "mathew/bio",
         expect.objectContaining({
-          bioBannerImage: '/img/header/4.png'
+          bioBannerImage: "/img/header/4.png",
         })
-      )
-    })
+      );
+    });
 
-    it('renders bio page with custom banner image if bio banner is found', async () => {
+    it("renders bio page with custom banner image if bio banner is found", async () => {
       GetBanners.mockResolvedValue({
-        bioBanner: { url: '/custom/banner/url.png' }
-      })
+        bioBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getBioPage(request, response)
+      await getBioPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/bio',
+        "mathew/bio",
         expect.objectContaining({
-          bioBannerImage: '/custom/banner/url.png'
+          bioBannerImage: "/custom/banner/url.png",
         })
-      )
-    })
-  })
+      );
+    });
+  });
 
-  describe('getAboutPage Controller', () => {
-    it('renders about page with default settings', async () => {
-      await getAboutPage(request, response)
+  describe("getAboutPage Controller", () => {
+    it("renders about page with default settings", async () => {
+      await getAboutPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/about',
+        "mathew/about",
         expect.objectContaining({
-          Title: 'Mathew Maciel - About Page',
+          Title: "Mathew Maciel - About Page",
           about: [],
-          aboutBannerImage: '/img/header/2.png',
-          getMetaData: []
+          aboutBannerImage: "/img/header/2.png",
+          getMetaData: [],
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
 
-    it('renders about page with default banner image if no about banner is found', async () => {
-      GetBanners.mockResolvedValue({})
+    it("renders about page with default banner image if no about banner is found", async () => {
+      GetBanners.mockResolvedValue({});
 
-      await getAboutPage(request, response)
+      await getAboutPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/about',
+        "mathew/about",
         expect.objectContaining({
-          aboutBannerImage: '/img/header/2.png'
+          aboutBannerImage: "/img/header/2.png",
         })
-      )
-    })
+      );
+    });
 
-    it('renders about page with custom banner image if about banner is found', async () => {
+    it("renders about page with custom banner image if about banner is found", async () => {
       GetBanners.mockResolvedValue({
-        aboutBanner: { url: '/custom/banner/url.png' }
-      })
+        aboutBanner: { url: "/custom/banner/url.png" },
+      });
 
-      await getAboutPage(request, response)
-
-      expect(response.render).toHaveBeenCalledWith(
-        'mathew/about',
-        expect.objectContaining({
-          aboutBannerImage: '/custom/banner/url.png'
-        })
-      )
-    })
-  })
-
-  describe('getConstructionPage Controller', () => {
-    it('renders construction page with default settings', () => {
-      getConstructionPage(request, response)
+      await getAboutPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'mathew/construction',
+        "mathew/about",
         expect.objectContaining({
-          Title: 'Mathew Maciel - Construction Page'
+          aboutBannerImage: "/custom/banner/url.png",
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
-  })
+      );
+    });
+  });
 
-  describe('login Controller', () => {
-    it('renders login page with default settings', () => {
-      login(request, response)
+  describe("getConstructionPage Controller", () => {
+    it("renders construction page with default settings", () => {
+      getConstructionPage(request, response);
 
       expect(response.render).toHaveBeenCalledWith(
-        'login',
+        "mathew/construction",
         expect.objectContaining({
-          Title: 'Mathew Maciel- Login Page'
+          Title: "Mathew Maciel - Construction Page",
         })
-      )
-      expect(response.status).toHaveBeenCalledWith(200)
-    })
-  })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
+  });
 
-  describe('postContactForm Controller', () => {
-    it('sends an email to the host and the user', async () => {
-      request.body = { name: 'Leo', email: 'leo@example.com', message: 'Hello!' }
-      request.get = jest.fn().mockReturnValue('localhost')
+  describe("login Controller", () => {
+    it("renders login page with default settings", () => {
+      login(request, response);
 
-      Email.prototype.sendWelcome = jest.fn().mockResolvedValue('Email Sent')
-      Email.prototype.sendToHost = jest.fn().mockResolvedValue('Email Sent')
+      expect(response.render).toHaveBeenCalledWith(
+        "login",
+        expect.objectContaining({
+          Title: "Mathew Maciel- Login Page",
+        })
+      );
+      expect(response.status).toHaveBeenCalledWith(200);
+    });
+  });
 
-      await postContact(request, response, next)
-
-      expect(Email).toHaveBeenCalledTimes(2)
-
-      expect(response.status).toHaveBeenCalledWith(200)
-      expect(response.json).toHaveBeenCalledWith(expect.objectContaining({
+  describe('postContact Controller', () => {
+    let req, res, next;
+  
+    beforeEach(() => {
+      req = {
+        body: {
+          name: 'Test User',
+          email: 'test@example.com',
+          message: 'Hello!',
+          recaptcha: 'valid-recaptcha-token',
+        },
+        protocol: 'https',
+        get: jest.fn().mockReturnValue('localhost'),
+        ip: '127.0.0.1',
+      };
+  
+      res = {
+        status: jest.fn().mockReturnThis(), // Mock status function to allow chaining
+        json: jest.fn(),
+      };
+  
+      next = jest.fn();
+    });
+  
+    afterEach(() => {
+      jest.clearAllMocks();
+    });
+  
+    it('sends an email to the host and the user if recaptcha verification is successful', async () => {
+      const mockFetchResponse = {
+        success: true,
+        score: 0.8,
+      };
+  
+      fetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue(mockFetchResponse),
+      });
+  
+      await postContact(req, res, next);
+  
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
         status: 'success',
-        message: 'Email sent!'
-      }))
-    })
-
+        message: 'Email sent!',
+      });
+  
+      // You can also assert on the mocked Email constructor and its methods here
+    });
+  
+    it('calls next with an error if recaptcha verification fails', async () => {
+      const mockFetchResponse = {
+        success: false,
+      };
+  
+      fetch.mockResolvedValue({
+        json: jest.fn().mockResolvedValue(mockFetchResponse),
+      });
+  
+      await postContact(req, res, next);
+  
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+    });
+  
     it('calls next with an error if email or message is missing', async () => {
-      request.body = { name: 'Leo', email: '', message: 'Hello!' }
-      request.get = jest.fn().mockReturnValue('localhost')
+      req.body = { name: 'Test User', email: '', message: 'Hello!' };
+  
+      await postContact(req, res, next);
+  
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+    });
+  });
 
-      await postContact(request, response, next)
+  describe("postSubscriber Controller", () => {
+    it("sends an email to the host and the user", async () => {
+      request.body = { email: "test@example.com" };
+      Subscriber.create.mockResolvedValue({ email: "test@example.com" });
 
-      expect(next).toHaveBeenCalledWith(expect.any(Error))
-    })
-  })
+      await postSubscriber(request, response, next);
 
-  describe('postSubscriber Controller', () => {
-    it('sends an email to the host and the user', async () => {
-      request.body = { email: 'test@example.com' }
-      Subscriber.create.mockResolvedValue({ email: 'test@example.com' })
-
-      await postSubscriber(request, response, next)
-
-      expect(Subscriber.create).toHaveBeenCalledWith({ email: 'test@example.com' })
-      expect(response.status).toHaveBeenCalledWith(200)
+      expect(Subscriber.create).toHaveBeenCalledWith({
+        email: "test@example.com",
+      });
+      expect(response.status).toHaveBeenCalledWith(200);
       expect(response.json).toHaveBeenCalledWith({
-        status: 'success',
-        message: 'Subscription successful!',
-        data: { subscriber: expect.any(Object) }
-      })
-    })
+        status: "success",
+        message: "Subscription successful!",
+        data: { subscriber: expect.any(Object) },
+      });
+    });
 
-    it('calls next with an error if email is missing', async () => {
-      request.body = { email: '' }
+    it("calls next with an error if email is missing", async () => {
+      request.body = { email: "" };
 
-      await postSubscriber(request, response, next)
+      await postSubscriber(request, response, next);
 
-      expect(next).toHaveBeenCalledWith(expect.any(Error))
-    })
-  })
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+    });
+  });
 
-  describe('getSubscriber Controller', () => {
-    it('retrieves all subscribers from the database', async () => {
-      const subscribers = [{ email: 'user1WithEmail.com' }, { email: 'user2WithEmail.com' }]
+  describe("getSubscriber Controller", () => {
+    it("retrieves all subscribers from the database", async () => {
+      const subscribers = [
+        { email: "user1WithEmail.com" },
+        { email: "user2WithEmail.com" },
+      ];
 
-      Subscriber.find.mockResolvedValue(subscribers)
+      Subscriber.find.mockResolvedValue(subscribers);
 
-      await getSubscriber(request, response, next)
+      await getSubscriber(request, response, next);
 
-      expect(Subscriber.find).toHaveBeenCalled()
-      expect(response.status).toHaveBeenCalledWith(200)
+      expect(Subscriber.find).toHaveBeenCalled();
+      expect(response.status).toHaveBeenCalledWith(200);
       expect(response.json).toHaveBeenCalledWith({
         results: subscribers.length,
-        status: 'success',
-        data: { subscribers }
-      })
-    })
+        status: "success",
+        data: { subscribers },
+      });
+    });
 
-    it('calls next with an error if no subscribers are found', async () => {
-      Subscriber.find.mockResolvedValue(null)
+    it("calls next with an error if no subscribers are found", async () => {
+      Subscriber.find.mockResolvedValue(null);
 
-      await getSubscriber(request, response, next)
+      await getSubscriber(request, response, next);
 
-      expect(next).toHaveBeenCalledWith(expect.any(Error))
-    })
-  })
-})
+      expect(next).toHaveBeenCalledWith(expect.any(Error));
+    });
+  });
+});

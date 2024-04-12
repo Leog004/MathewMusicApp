@@ -10,6 +10,7 @@ footer#footer.padding-top-bottom(style='background-color: #262626; color:#fff;')
                 p
                   | Subscribe now to get exclusive deals on merch and updates on the latest happening with Mathew Maciel.
                 p.one-line
+                  input#g-recaptcha-response(type='hidden' name='g-recaptcha-response')
                   label.screen-reader-text(for='subscribe_email') Subscription Email
                   input#subscribe_email(name='email' required='' placeholder='Your email address…' type='email')
                   input.button-color.button-filled(value='Subscribe' type='submit')

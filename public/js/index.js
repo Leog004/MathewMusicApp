@@ -3,6 +3,7 @@ import {instagramPhotos} from './getInstagram'
 import { login, logout } from './login';
 import {contactUs, subcriber} from './contact';
 import {editPage} from './editPage';
+import { googleRecaptha } from './googleRecaptcha';
 
 const loginForm = document.querySelector('#loginForm');
 const logOutBtn = document.querySelector('#logoutBtn');
@@ -43,9 +44,13 @@ if(instagramRows){
 if(subsciberForm){
     subsciberForm.addEventListener('submit', e => {
         e.preventDefault();
-        const email = document.getElementById('subscribe_email').value;
-        const pageAdded = 'asdakjshdjask';
-        subcriber(email, pageAdded);
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcNdKMpAAAAAF3CPRcEzFBLPawEk92hLkBVQwWR', {action: 'submit'}).then(function(token) {
+                const email = document.getElementById('subscribe_email').value;
+                const pageAdded = 'asdakjshdjask';
+                subcriber(email, pageAdded);
+            });
+        });
     });  
 }
 
@@ -54,12 +59,19 @@ if(contactForm){
     console.log('contact form is here')
     contactForm.addEventListener('submit', e => {
         e.preventDefault();
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
 
-        contactUs(name, email,message);
-        console.log(name,email,message);
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcNdKMpAAAAAF3CPRcEzFBLPawEk92hLkBVQwWR', {action: 'submit'}).then(function(token) {
+                // Add token value to form
+                let recaptcha = token; 
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                contactUs(name, email, message, recaptcha);
+                console.log(name,email,message, recaptcha);
+
+            });
+        });
     });
 }
 

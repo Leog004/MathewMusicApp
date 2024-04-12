@@ -2,15 +2,16 @@
 import { showAlert } from './alerts';
 import axios from 'axios';
 
-export const contactUs = async (name, email, message) => {
+export const contactUs = async (name, email, message, recaptcha) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: 'https://www.mathewmacielmusic.com/contact',
+            url: 'http://localhost:3000/contact',
             data: {
                 name,
                 email,
-                message
+                message,
+                recaptcha
             }
         });
 

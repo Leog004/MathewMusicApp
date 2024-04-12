@@ -58,6 +58,7 @@ block content
             .col-12
               label(for='message') Message
               textarea#message(name='message' cols='30' rows='10' required='')
+              input#g-recaptcha-response(type='hidden' name='g-recaptcha-response')
             .col-12.text-center
               button.button-filled.button-color(type='submit')
                 span.zmdi.zmdi-mail-send
@@ -76,3 +77,4 @@ block content
 
 block append javascript
   script(src='/js/bundle.js')
+  

@@ -8,6 +8,7 @@ const catchAsync = require('./../utils/catchAsync')
 const AppError = require('../utils/appError')
 const Email = require('../utils/email')
 const Subscriber = require('../models/subscriber')
+const fetch = require('node-fetch')
 const {
   GetAllMusic, GetFeaturedSong, GetAllVideos, GetBio, GetAbout,
   GetFeaturedVideos, GetMetaData, GetBanners
@@ -58,7 +59,6 @@ exports.getHomePage = catchAsync(async (req, res) => {
   const homeBannerImage = getHomeBanner?.homeBanner?.url || '/img/header/1.png'
   const featuredSongPlay = featuredSong.length > 0 ? featuredSong[0].spotifyUrl : 'https://open.spotify.com/embed/track/3meajb9mhHi8qIII4EHSDE'
 
-  console.log('getMetaData', getMetaData);
   res.status(200).render('mathew/home', {
     Title: 'Mathew Maciel - Home Page',
     music,
@@ -259,11 +259,26 @@ exports.login = (req, res) => {
  * @property {string} req.body.message - The message provided by the person in the contact form.
  */
 exports.postContact = catchAsync(async (req, res, next) => {
-  const { name, email, message } = req.body
+  const { name, email, message, recaptcha } = req.body
+
+  console.log(recaptcha)
+  const secretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY;
+  const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${recaptcha}&remoteip=${req.ip}`;
+
+  const response = await fetch(verificationURL, { method: 'POST' });
+  const data = await response.json();
+
+  console.log(data)
+
+  if (!data.success || data.score < 0.7) {
+    return next(new AppError('Failed captcha verification', 400))
+  }
+
   if (!email || !message) {
     return next(new AppError('Please provide email and message!', 400))
   }
   const url = `${req.protocol}://${req.get('host')}/`
+
   await new Email({ name, email, message }, url).sendWelcome()
   await new Email({ name, email: 'mathewmacielmusic@gmail.com', message }, url).sendToHost()
 
