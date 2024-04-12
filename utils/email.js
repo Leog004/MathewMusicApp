@@ -13,7 +13,7 @@ module.exports = class Email {
     }
     this.message = user.message;
     this.url = url;
-    this.from = `Leo Garza <${process.env.EMAIL_FROM}>`;
+    this.from = `Mathew Maciel Website <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {

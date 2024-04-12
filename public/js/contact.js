@@ -2,11 +2,13 @@
 import { showAlert } from './alerts';
 import axios from 'axios';
 
+const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://www.mathewmacielmusic.com' : 'http://localhost:3000';
+
 export const contactUs = async (name, email, message, recaptcha) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: 'http://localhost:3000/contact',
+            url: `${BASE_URL}/contact`,
             data: {
                 name,
                 email,
@@ -36,7 +38,7 @@ export const subcriber = async (email, pageAdded) => {
     try{
         const res = await axios({
             method: 'POST',
-            url: 'https://www.mathewmacielmusic.com/subscriber',
+            url: `${BASE_URL}/subscriber`,
             data: {
                 email,
                 pageAdded
